@@ -72,8 +72,6 @@ if ($disableajax !== -1) {
     }
 }
 
-$o.= html_writer::tag('div', '', array('class' => 'left side'));
-
 $renderer->print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection);
 
 if ($renderer->showyuidialogue) {
@@ -82,7 +80,7 @@ if ($renderer->showyuidialogue) {
 
 // Include course format js module.
 $PAGE->requires->js('/course/format/topics/format.js');
-$PAGE->requires->js('/course/format/onetopic/format.js');
+$PAGE->requires->js('/course/format/onetopicplus/format.js');
 
 $params = array(
     'formattype' => $course->tabsview,
