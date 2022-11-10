@@ -2,6 +2,7 @@ COURSE FORMAT OneTopicPlus
 ============================
 
 Package tested in: moodle 3.11+.
+
 Moodle 4.0+ not yet supported.
 
 This course format shows Sections as Tabs, and (optionall) Activities within each section as Cards.
@@ -19,6 +20,7 @@ ACKNOWLEDGEMENTS
 This version of OneTopic combines features of both OneTopic and TopicCardActivities with a few additions to both
 
 OneTopic by: David Herney https://github.com/davidherney/moodle-format_onetopicplus
+
 TopicActivityCards by: Andrew Hancox https://github.com/andrewhancox/format_topicsactivitycards
 
 VERSION
