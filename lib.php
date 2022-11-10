@@ -428,7 +428,7 @@ class format_onetopicplus extends format_base {
                     and c.area = 'mod'
                     and f.shortname = ?
                 ", [self::CARDIMAGE_META_FIELD_NAME])) {
-                    $CARD_IMAGE_FORMATS[] = [self::CARDIMAGE_META => new lang_string('cardimage_meta', 'format_onetopicplus')];
+                    $CARD_IMAGE_FORMATS[0][self::CARDIMAGE_META] = new lang_string('cardimage_meta', 'format_onetopicplus');
                 }
             }
             $courseformatoptionsedit = array(

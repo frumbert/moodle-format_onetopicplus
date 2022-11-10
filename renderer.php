@@ -1141,6 +1141,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         if (!empty($modinfo->sections[$section->section])) {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
+                $image = '';
 
                 if ($ismoving and $mod->id == $USER->activitycopy) {
                     // do not display moving mod
@@ -1149,7 +1150,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
                 switch ($course->cardimage) {
                     case format_onetopicplus::CARDIMAGE_GEN:
-                        $displayotions['cardimages'][$mod->id] = $OUTPUT->get_generated_image_for_id($mod->id);
+                        $image = $OUTPUT->get_generated_image_for_id($mod->id);
                         break;
 
                     case format_onetopicplus::CARDIMAGE_META:
@@ -1159,17 +1160,30 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                                 if (empty($data->get_value())) {
                                     continue;
                                 }
-                                if ($data->get_field()->get('shortname') === 'cardimage') {
-                                    $displayoptions['cardimages'][$mod->id] = $data->get_value();
+                                $field = $data->get_field();
+                                if ($field->get('shortname') === 'cardimage') {
+                                    switch ($field->get('type')) {
+                                        case 'file':
+                                            $files = $data->export_raw_urls();
+                                            if (!empty($files)) $image = $files[0]->url;
+                                            break;
+                                        case 'image':
+                                            $image = $data->export_raw_url();
+                                            break;
+                                        default:
+                                            $image = $data->get_value(); // e.g. textarea with base64; text with url
+                                    }
                                 }
                             }
                         }
                         break;
                     
                     case format_onetopicplus::CARDIMAGE_NONE:
-                        $displayoptions['cardimages'] = '';
+                        $image = '';
                         break;
+
                 }
+                $displayoptions['cardimages'][$mod->id] = $image;
 
                 if ($modulehtml = $this->course_section_cm_list_item($course,
                         $completioninfo, $mod, $sectionreturn, $displayoptions)) {

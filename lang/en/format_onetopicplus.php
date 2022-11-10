@@ -50,8 +50,8 @@ $string['cardimage_help'] = "Card Images can be:\n
 - Specified in module custom fields (see README.md)";
 $string['cardimage_none'] = 'None';
 $string['cardimage_gen'] = 'Psuedo-random';
-$string['cardimage_html'] = 'Extracted';
-$string['cardimage_meta'] = 'Metadata';
+$string['cardimage_html'] = 'Extracted from description';
+$string['cardimage_meta'] = 'Module metadata (cardimage)';
 
 $string['movesectionto'] = 'Move current topic';
 $string['movesectionto_help'] = 'Move current topic to left/right of selected topic';
