@@ -1,0 +1,17 @@
+{{#editing}}
+<div
+     id="module-{{mod.id}}"
+     data-region="module"
+     data-module="{{mod.id}}"
+     class="card {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}} activity type-{{mod.modname}} {{mod.extraclasses}}">
+    <div class="card-body">
+        {{{moveicons}}}
+        <span class="float-right editoptions">
+            {{{editoptions}}}
+        </span>
+        {{{text}}}
+    </div>
+</div>
+{{/editing}}
+
+{{^editing}}{{{text}}}{{/editing}}

@@ -17,16 +17,18 @@
 /**
  * Version details.
  *
- * @package format_onetopic
+ * @package format_onetopicplus
+ * @copyright 2022 tim st. clair (https://github.com/frumbert)
  * @copyright 2015 David Herney Bernal - cirano
+ * @copyright  2020 onwards Andrew Hancox <andrewdchancox@googlemail.com> (https://www.opensourcelearning.co.uk/)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020122704;       // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version = 2022111000;       // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2020061503;        // Requires this Moodle version.
-$plugin->component = 'format_onetopic'; // Full name of the plugin (used for diagnostics).
+$plugin->component = 'format_onetopicplus'; // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '3.11.04(la almeria)';
 $plugin->dependencies = array('format_topics' => 2020061500);

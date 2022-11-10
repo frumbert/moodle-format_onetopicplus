@@ -17,11 +17,11 @@
 /**
  * Class containing a single tab.
  *
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @copyright 2021 David Herney - https://bambuco.co
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace format_onetopic;
+namespace format_onetopicplus;
 
 /**
  * Class containing the tab information.
@@ -82,7 +82,7 @@ class singletab {
     public $active = true;
 
     /**
-     * @var \format_onetopic\tabs Tabs childs list.
+     * @var \format_onetopicplus\tabs Tabs childs list.
      */
     private $childs;
 
@@ -108,13 +108,13 @@ class singletab {
         $this->customstyles = $customstyles;
         $this->specialclass = $specialclass;
 
-        $this->childs = new \format_onetopic\tabs();
+        $this->childs = new \format_onetopicplus\tabs();
     }
 
     /**
      * Add a child or sub tab.
      *
-     * @param \format_onetopic\singletab $child A subtab of current tab.
+     * @param \format_onetopicplus\singletab $child A subtab of current tab.
      */
     public function add_child(singletab $child) {
         $this->childs->add($child);
@@ -141,7 +141,7 @@ class singletab {
     /**
      * To get the sub tabs list.
      *
-     * @return \format_onetopic\tabs The sub tabs list object.
+     * @return \format_onetopicplus\tabs The sub tabs list object.
      */
     public function get_childs() {
         return $this->childs;

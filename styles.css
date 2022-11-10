@@ -1,15 +1,15 @@
 /** Styles included in topics course format */
 
-.format-onetopic .jumpmenu {
+.format-onetopicplus .jumpmenu {
     text-align: center;
 }
 
-.format-onetopic .course-content div.single-section .tabtree .tabrow0 li {
+.format-onetopicplus .course-content div.single-section .tabtree .tabrow0 li {
     line-height: 28px;
     display: inline-block;
 }
 
-.format-onetopic .course-content div.single-section .tabtree .tabrow0 li.here .empty {
+.format-onetopicplus .course-content div.single-section .tabtree .tabrow0 li.here .empty {
     bottom: 3px;
     display: block;
     height: 1px;
@@ -17,130 +17,142 @@
     right: 0;
 }
 
-.format-onetopic .course-content div.single-section .tabtree {
+.format-onetopicplus .course-content div.single-section .tabtree {
     margin-bottom: 0;
 }
 
-.format-onetopic .tab_content {
+.format-onetopicplus .tab_content {
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.format-onetopic .tab_content.marker {
+.format-onetopicplus .tab_content.marker {
     font-weight: bold;
 }
 
-.format-onetopic .utilities-separator {
+.format-onetopicplus .utilities-separator {
     clear: both;
     margin-top: 15px;
 }
 
-.format-onetopic ul.nav-tabs li a .tab_content.dimmed .sectionname {
+.format-onetopicplus ul.nav-tabs li a .tab_content.dimmed .sectionname {
     color: #999;
     opacity: 0.5;
 }
 
-.format-onetopic ul.nav-tabs li a .tab_content .iconhelp {
+.format-onetopicplus ul.nav-tabs li a .tab_content .iconhelp {
     cursor: pointer;
     margin-left: 5px;
     pointer-events: auto;
 }
 
-.format-onetopic ul.nav-tabs li a .tab_content .iconhelp i {
+.format-onetopicplus ul.nav-tabs li a .tab_content .iconhelp i {
     margin: 0;
 }
 
-.format-onetopic .subtopic-increase-sections {
+.format-onetopicplus .subtopic-increase-sections {
     margin-right: 10px;
 }
 
-.format-onetopic li.sublevel {
+.format-onetopicplus li.sublevel {
     padding-left: 20px;
 }
 
-.format-onetopic .onetopic .nav-tabs > li > a {
+.format-onetopicplus .onetopic .nav-tabs > li > a {
     padding: 0;
 }
 
-.format-onetopic .onetopic .tab_content {
+.format-onetopicplus .onetopic .tab_content {
     padding: 8px 12px;
     display: inline-block;
 }
 
-.format-onetopic .onetopic_hideicons .activityicon {
+.format-onetopicplus .onetopic_hideicons .activityicon {
     display: none;
 }
 
-.format-onetopic .availability_info_box {
+.format-onetopicplus .availability_info_box {
     display: inline;
 }
 
-.format-onetopic .summary img.activityicon {
+.format-onetopicplus .summary img.activityicon {
     margin-right: 3px;
     vertical-align: text-bottom;
 }
 
-.format-onetopic #course_format_onetopic_config_movesection .form-item {
+.format-onetopicplus.editing .section .activity .editing_move {
+    position: unset;
+    left: unset;
+    top: unset;
+}
+
+.format-onetopicplus #course_format_onetopicplus_config_movesection .form-item {
     border-bottom: 1px solid #999;
     padding: 10px;
 }
 
-.format-onetopic #course_format_onetopic_config_movesection .form-label {
+.format-onetopicplus #course_format_onetopicplus_config_movesection .form-label {
     font-weight: bold;
 }
 
-.format-onetopic #course_format_onetopic_config_movesection .form-setting {
+.format-onetopicplus #course_format_onetopicplus_config_movesection .form-setting {
     padding-left: 20px;
 }
 
-.format-onetopic #course_format_onetopic_config_movesection .form-description {
+.format-onetopicplus #course_format_onetopicplus_config_movesection .form-description {
     padding-left: 50px;
     font-style: italic;
 }
 
-.format-onetopic #course_format_onetopic_config_movesection #changenumsections {
+.format-onetopicplus #course_format_onetopicplus_config_movesection #changenumsections {
     text-align: left;
 }
 
-.format-onetopic .onetopic .content > .summary .quickeditlink {
+.format-onetopicplus li.movehere img.icon {
+    width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.format-onetopicplus .onetopic .content > .summary .quickeditlink {
     display: none;
 }
 
-.format-onetopic .onetopic .content > .summary .iconhelp {
+.format-onetopicplus .onetopic .content > .summary .iconhelp {
     cursor: pointer;
     margin-left: 2px;
 }
 
-.format-onetopic .onetopic .content > .summary .iconhelp i {
+.format-onetopicplus .onetopic .content > .summary .iconhelp i {
     margin: 0;
 }
 
-.format-onetopic .onetopic .completiontag > form,
-.format-onetopic .onetopic .completiontag > form > div {
+.format-onetopicplus .onetopic .completiontag > form,
+.format-onetopicplus .onetopic .completiontag > form > div {
     display: inline;
 }
 
-.format-onetopic .onetopic .completiontag > form > div button {
+.format-onetopicplus .onetopic .completiontag > form > div button {
     padding: 0;
     margin: 0;
     line-height: 0;
 }
 
-.format-onetopic .onetopic .completiontag img.icon {
+.format-onetopicplus .onetopic .completiontag img.icon {
     margin: 0 3px 0 5px;
 }
 
-.format-onetopic .onetopic .completiontag .showcompletionconditions {
+.format-onetopicplus .onetopic .completiontag .showcompletionconditions {
     position: absolute;
 }
 
-.format-onetopic .onetopic .completiontag.hascompletionconditions {
+.format-onetopicplus .onetopic .completiontag.hascompletionconditions {
     padding-right: 24px;
 }
 
-.format-onetopic .onetopic .completiontag .showcompletionconditions:hover {
+.format-onetopicplus .onetopic .completiontag .showcompletionconditions:hover {
     z-index: 2;
     background-color: #fff;
     padding: 5px;
@@ -148,24 +160,24 @@
     border-radius: 5px;
 }
 
-.format-onetopic .onetopic .completiontag .showcompletionconditions .activity-information {
+.format-onetopicplus .onetopic .completiontag .showcompletionconditions .activity-information {
     display: none;
 }
 
-.format-onetopic .onetopic .completiontag .showcompletionconditions:hover .activity-information {
+.format-onetopicplus .onetopic .completiontag .showcompletionconditions:hover .activity-information {
     display: block;
 }
 
-.format-onetopic .onetopic .completiontag .showcompletionconditions:hover > img {
+.format-onetopicplus .onetopic .completiontag .showcompletionconditions:hover > img {
     display: none;
 }
 
-.format-onetopic .onetopic.verticaltabs > a[name="tabs-tree-start"] {
+.format-onetopicplus .onetopic.verticaltabs > a[name="tabs-tree-start"] {
     padding-bottom: 20px;
     display: block;
 }
 
-.format-onetopic .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
+.format-onetopicplus .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
     float: left;
     display: flex;
     flex-direction: column;
@@ -174,29 +186,29 @@
     border-bottom: none;
 }
 
-.format-onetopic .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) .nav-item {
+.format-onetopicplus .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) .nav-item {
     margin-right: -1px;
     margin-bottom: 0;
     max-width: 100%;
 }
 
-.format-onetopic .onetopic.verticaltabs > .content-section {
+.format-onetopicplus .onetopic.verticaltabs > .content-section {
     margin-left: 260px;
     display: grid;
 }
 
-.format-onetopic .onetopic.verticaltabs > .nav-tabs .nav-link:hover,
-.format-onetopic .onetopic.verticaltabs > .nav-tabs .nav-link:focus,
-.format-onetopic .onetopic.verticaltabs > .nav-tabs .nav-link.active,
-.format-onetopic .onetopic.verticaltabs > .nav-tabs .nav-item.show .nav-link {
+.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-link:hover,
+.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-link:focus,
+.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-link.active,
+.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-item.show .nav-link {
     border-color: #dee2e6 #fff #dee2e6 #dee2e6;
 }
 
-.format-onetopic .onetopic-subtabs_body {
+.format-onetopicplus .onetopic-subtabs_body {
     padding: 0 15px;
 }
 
-.format-onetopic .tabs-wrapper {
+.format-onetopicplus .tabs-wrapper {
     position: relative;
     max-width: 100%;
     height: 40px;
@@ -205,12 +217,12 @@
     overflow-y: hidden;
 }
 
-.format-onetopic .tabs-wrapper.hasscroll {
+.format-onetopicplus .tabs-wrapper.hasscroll {
     padding: 0 20px;
     border-bottom: 1px solid #dee2e6;
 }
 
-.format-onetopic .tabs-wrapper .nav.nav-tabs {
+.format-onetopicplus .tabs-wrapper .nav.nav-tabs {
     height: 60px;
     box-sizing: border-box;
     white-space: nowrap;
@@ -220,7 +232,7 @@
     flex-wrap: nowrap;
 }
 
-.format-onetopic .tabs-wrapper .scroll-arrow {
+.format-onetopicplus .tabs-wrapper .scroll-arrow {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -229,51 +241,81 @@
     background-color: #fff;
 }
 
-.format-onetopic .tabs-wrapper .left-arrow {
+.format-onetopicplus .tabs-wrapper .left-arrow {
     left: 0;
     border-right: 1px solid #dee2e6;
     box-shadow: 1px 0 7px #dee2e6;
 }
 
-.format-onetopic .tabs-wrapper .right-arrow {
+.format-onetopicplus .tabs-wrapper .right-arrow {
     right: 0;
     border-left: 1px solid #dee2e6;
     box-shadow: -1px 0 7px #dee2e6;
 }
-.format-onetopic .nav-item .subtopic {
+.format-onetopicplus .nav-item .subtopic {
     font-size: 90%;
 }
 
 /* Fixing specific themes */
-.format-onetopic.theme_adaptable .tabs-wrapper {
+.format-onetopicplus.theme_adaptable .tabs-wrapper {
     height: 50px;
 }
 
-.format-onetopic.theme_adaptable .tabs-wrapper .nav.nav-tabs {
+.format-onetopicplus.theme_adaptable .tabs-wrapper .nav.nav-tabs {
     height: 65px;
 }
 
-.format-onetopic.theme_adaptable .tabs-wrapper .nav-item {
+.format-onetopicplus.theme_adaptable .tabs-wrapper .nav-item {
     margin-top: 0;
 }
 
 /* Moove or other fontawesome based icons */
-.format-onetopic .tabs-wrapper .right-arrow .fa-plus-square:before {
+.format-onetopicplus .tabs-wrapper .right-arrow .fa-plus-square:before {
     content: "";
 }
 
-.format-onetopic .tabs-wrapper .left-arrow .fa-plus-square:before {
+.format-onetopicplus .tabs-wrapper .left-arrow .fa-plus-square:before {
     content: "";
 }
 
 @media (max-width: 600px) {
-    .format-onetopic .onetopic.verticaltabs > .content-section {
+    .format-onetopicplus .onetopic.verticaltabs > .content-section {
         clear: both;
         margin-left: inherit;
     }
 
-    .format-onetopic .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
+    .format-onetopicplus .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
         width: auto;
         flex-direction: inherit;
     }
 }
+
+
+.format-onetopicplus .card.activity .card-header {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 8em;
+}
+
+.format-onetopicplus .card.activity .card-body div.cmname {
+    margin-bottom : 1rem;
+    font-size: 1.125rem;
+}
+/* .format-onetopicplus .section.card-deck > div.card.activity {
+    max-width: 24.5%;
+border: 1px solid red;
+}
+
+@media only screen and (max-width: 576px) {
+    .format-onetopicplus .section.card-deck > div.card.activity {
+        width: 100%;
+border: 1px solid blue;
+    }
+}
+@media only screen and (min-with: 577px) and (max-width: 959px) {
+    .format-onetopicplus .section.card-deck > div.card.activity {
+        max-width: 49%;
+border: 1px solid yellow;
+    }
+} */

@@ -19,7 +19,7 @@
  *
  * This script is based in the original feature created by Dan Poltawski.
  *
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @copyright 2021 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

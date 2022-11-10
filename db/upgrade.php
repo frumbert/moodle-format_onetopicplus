@@ -17,18 +17,18 @@
 /**
  * Upgrade scripts for course format "onetopic"
  *
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @copyright 2018 David Herney Bernal - cirano
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * Upgrade script for format_onetopic
+ * Upgrade script for format_onetopicplus
  *
  * @param int $oldversion the version we are upgrading from
  * @return bool result
  */
-function xmldb_format_onetopic_upgrade($oldversion) {
+function xmldb_format_onetopicplus_upgrade($oldversion) {
     global $CFG, $DB;
 
     return true;

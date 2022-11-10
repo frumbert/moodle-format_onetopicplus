@@ -14,16 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Privacy Subsystem implementation for format_onetopic.
+ * Privacy Subsystem implementation for format_onetopicplus.
  *
- * @package    format_onetopic
+ * @package    format_onetopicplus
  * @copyright 2019 David Herney Bernal - cirano
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace format_onetopic\privacy;
+namespace format_onetopicplus\privacy;
 
 /**
- * Privacy Subsystem for format_onetopic implementing null_provider.
+ * Privacy Subsystem for format_onetopicplus implementing null_provider.
  *
  * @copyright 2019 David Herney Bernal - cirano
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

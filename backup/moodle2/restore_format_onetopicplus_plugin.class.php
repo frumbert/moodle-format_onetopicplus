@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Specialised restore for format_onetopic
+ * Specialised restore for format_onetopicplus
  *
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @category  backup
  * @copyright 2018 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,16 +28,16 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot. '/course/format/topics/backup/moodle2/restore_format_topics_plugin.class.php');
 
 /**
- * Specialised restore for format_onetopic
+ * Specialised restore for format_onetopicplus
  *
  * Processes 'numsections' from the old backup files and hides sections that used to be "orphaned"
  *
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @category  backup
  * @copyright 2018 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class restore_format_onetopic_plugin extends restore_format_topics_plugin {
+class restore_format_onetopicplus_plugin extends restore_format_topics_plugin {
 
     /**
      * Executed after course restore is complete

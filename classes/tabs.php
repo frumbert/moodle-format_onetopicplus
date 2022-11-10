@@ -17,11 +17,11 @@
 /**
  * Class containing a basic tabs structure.
  *
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @copyright 2021 David Herney - https://bambuco.co
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace format_onetopic;
+namespace format_onetopicplus;
 
 /**
  * Class containing the tabs information.
@@ -56,7 +56,7 @@ class tabs {
     /**
      * Add a new tab to the tabs list.
      *
-     * @param \format_onetopic\singletab $tab The new instanced tab.
+     * @param \format_onetopicplus\singletab $tab The new instanced tab.
      */
     public function add(singletab $tab) {
         $tab->index = count($this->tabslist);
@@ -66,7 +66,7 @@ class tabs {
     /**
      * To get the tabs list.
      *
-     * @return array of \format_onetopic\singletab.
+     * @return array of \format_onetopicplus\singletab.
      */
     public function get_list() {
         return $this->tabslist;

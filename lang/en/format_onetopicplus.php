@@ -15,23 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'format_onetopic', language 'en'
+ * Strings for component 'format_onetopicplus', language 'en'
  *
  * @since 2.4
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['currentsection'] = 'This topic';
 $string['sectionname'] = 'Topic';
-$string['pluginname'] = 'Onetopic format';
-$string['page-course-view-topics'] = 'Any course main page in onetopic format';
-$string['page-course-view-topics-x'] = 'Any course page in onetopic format';
+$string['pluginname'] = 'Onetopicplus format';
+$string['page-course-view-topics'] = 'Any course main page in onetopicplus format';
+$string['page-course-view-topics-x'] = 'Any course page in onetopicplus format';
 $string['hidefromothers'] = 'Hide topic';
 $string['showfromothers'] = 'Show topic';
 $string['hidetabsbar'] = 'Hide tabs bar';
 $string['hidetabsbar_help'] = 'Hide tabs bar in the course page. The navigation is with the sections navbar.';
+
+$string['hidebottomnav'] = 'Hide bottom navigation bar';
+$string['hidebottomnav_help'] = 'Hide botton navigation bar in the course page.';
+
+$string['activitydisplay'] = 'Activity layout';
+$string['activitydisplay_help'] = 'The style of display for listing activities within a section. Cards will display the first image in the description (if shown) as the card header, or from module metadata field called "activityimage" (if required plugins are available).';
+$string['list'] = 'List';
+$string['cards_h'] = 'Cards (Image @ left)';
+$string['cards_v'] = 'Cards (Image @ top)';
 
 $string['movesectionto'] = 'Move current topic';
 $string['movesectionto_help'] = 'Move current topic to left/right of selected topic';

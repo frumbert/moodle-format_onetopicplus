@@ -18,7 +18,7 @@
  * This file contains main class for the course format Onetopic
  *
  * @since     2.0
- * @package   format_onetopic
+ * @package   format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,11 +30,11 @@ require_once($CFG->dirroot. '/course/format/lib.php');
  * Main class for the Onetopic course format
  *
  * @since 2.0
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_onetopic extends core_courseformat\base {
+class format_onetopicplus extends format_base {
 
     /** @var int The summary is not a template */
     const TEMPLATETOPIC_NOT = 0;
@@ -53,6 +53,10 @@ class format_onetopic extends core_courseformat\base {
 
     /** @var int One line view */
     const TABSVIEW_ONELINE = 2;
+
+    const ACTIVITYDISPLAY_LIST = 0;
+    const ACTIVITYDISPLAY_TILEV = 1;
+    const ACTIVITYDISPLAY_TILEH = 2;
 
     /** @var bool If the class was previously instanced, in one execution cycle */
     private static $loaded = false;
@@ -122,7 +126,7 @@ class format_onetopic extends core_courseformat\base {
             // Check if the display section is available.
             if ((!$canviewhidden && (!$sections[$realsection]->uservisible || !$sections[$realsection]->available))) {
 
-                self::$byhiddenmsg = get_string('hidden_message', 'format_onetopic', $this->get_section_name($realsection));
+                self::$byhiddenmsg = get_string('hidden_message', 'format_onetopicplus', $this->get_section_name($realsection));
 
                 $valid = false;
                 $k = $realcoursedisplay ? 1 : 0;
@@ -366,6 +370,14 @@ class format_onetopic extends core_courseformat\base {
                     'default' => 0,
                     'type' => PARAM_INT
                 ),
+                'hidebottomnav' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                ),
+                'activitydisplay' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT
+                ),
                 'coursedisplay' => array(
                     'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT
@@ -395,14 +407,14 @@ class format_onetopic extends core_courseformat\base {
                         array(
                             0 => new lang_string('hiddensectionscollapsed'),
                             1 => new lang_string('hiddensectionsinvisible'),
-                            2 => new lang_string('hiddensectionshelp', 'format_onetopic')
+                            2 => new lang_string('hiddensectionshelp', 'format_onetopicplus')
                         )
                     ),
                 ),
                 'hidetabsbar' => array(
-                    'label' => get_string('hidetabsbar', 'format_onetopic'),
+                    'label' => get_string('hidetabsbar', 'format_onetopicplus'),
                     'help' => 'hidetabsbar',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
@@ -411,35 +423,60 @@ class format_onetopic extends core_courseformat\base {
                         )
                     ),
                 ),
-                'coursedisplay' => array(
-                    'label' => new lang_string('coursedisplay', 'format_onetopic'),
+                'hidebottomnav' => array(
+                    'label' => get_string('hidebottomnav', 'format_onetopicplus'),
+                    'help' => 'hidebottomnav',
+                    'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
-                            COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single', 'format_onetopic'),
-                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi', 'format_onetopic')
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    ),
+                ),
+                'activitydisplay' => array(
+                    'label' => get_string('activitydisplay', 'format_onetopicplus'),
+                    'help' => 'activitydisplay',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('list'),
+                            1 => new lang_string('cards_v', 'format_onetopicplus'),
+                            2 => new lang_string('cards_h', 'format_onetopicplus')
+                        )
+                    ),
+                ),
+                'coursedisplay' => array(
+                    'label' => new lang_string('coursedisplay', 'format_onetopicplus'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single', 'format_onetopicplus'),
+                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi', 'format_onetopicplus')
                         )
                     ),
                     'help' => 'coursedisplay',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 ),
                 'templatetopic' => array(
-                    'label' => new lang_string('templatetopic', 'format_onetopic'),
+                    'label' => new lang_string('templatetopic', 'format_onetopicplus'),
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
-                            self::TEMPLATETOPIC_NOT => new lang_string('templetetopic_not', 'format_onetopic'),
-                            self::TEMPLATETOPIC_SINGLE => new lang_string('templetetopic_single', 'format_onetopic'),
-                            self::TEMPLATETOPIC_LIST => new lang_string('templetetopic_list', 'format_onetopic')
+                            self::TEMPLATETOPIC_NOT => new lang_string('templetetopic_not', 'format_onetopicplus'),
+                            self::TEMPLATETOPIC_SINGLE => new lang_string('templetetopic_single', 'format_onetopicplus'),
+                            self::TEMPLATETOPIC_LIST => new lang_string('templetetopic_list', 'format_onetopicplus')
                         )
                     ),
                     'help' => 'templatetopic',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 ),
                 'templatetopic_icons' => array(
-                    'label' => get_string('templatetopic_icons', 'format_onetopic'),
+                    'label' => get_string('templatetopic_icons', 'format_onetopicplus'),
                     'help' => 'templatetopic_icons',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
@@ -449,17 +486,17 @@ class format_onetopic extends core_courseformat\base {
                     ),
                 ),
                 'tabsview' => array(
-                    'label' => new lang_string('tabsview', 'format_onetopic'),
+                    'label' => new lang_string('tabsview', 'format_onetopicplus'),
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
-                            self::TABSVIEW_DEFAULT => new lang_string('tabsview_default', 'format_onetopic'),
-                            self::TABSVIEW_VERTICAL => new lang_string('tabsview_vertical', 'format_onetopic'),
-                            self::TABSVIEW_ONELINE => new lang_string('tabsview_oneline', 'format_onetopic')
+                            self::TABSVIEW_DEFAULT => new lang_string('tabsview_default', 'format_onetopicplus'),
+                            self::TABSVIEW_VERTICAL => new lang_string('tabsview_vertical', 'format_onetopicplus'),
+                            self::TABSVIEW_ONELINE => new lang_string('tabsview_oneline', 'format_onetopicplus')
                         )
                     ),
                     'help' => 'tabsview',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
@@ -571,7 +608,7 @@ class format_onetopic extends core_courseformat\base {
                     'type' => PARAM_INT
                 ),
                 'firsttabtext' => array(
-                    'default' => get_string('index', 'format_onetopic'),
+                    'default' => get_string('index', 'format_onetopicplus'),
                     'type' => PARAM_TEXT
                 ),
                 'fontcolor' => array(
@@ -594,44 +631,44 @@ class format_onetopic extends core_courseformat\base {
                 'level' => array(
                     'default' => 0,
                     'type' => PARAM_INT,
-                    'label' => get_string('level', 'format_onetopic'),
+                    'label' => get_string('level', 'format_onetopicplus'),
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
-                            0 => get_string('asprincipal', 'format_onetopic'),
-                            1 => get_string('aschild', 'format_onetopic')
+                            0 => get_string('asprincipal', 'format_onetopicplus'),
+                            1 => get_string('aschild', 'format_onetopicplus')
                         )
                     ),
                     'help' => 'level',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 ),
                 'firsttabtext' => array(
-                    'default' => get_string('index', 'format_onetopic'),
+                    'default' => get_string('index', 'format_onetopicplus'),
                     'type' => PARAM_TEXT,
-                    'label' => get_string('firsttabtext', 'format_onetopic'),
+                    'label' => get_string('firsttabtext', 'format_onetopicplus'),
                     'help' => 'firsttabtext',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 ),
                 'fontcolor' => array(
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'label' => get_string('fontcolor', 'format_onetopic'),
+                    'label' => get_string('fontcolor', 'format_onetopicplus'),
                     'help' => 'fontcolor',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 ),
                 'bgcolor' => array(
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'label' => get_string('bgcolor', 'format_onetopic'),
+                    'label' => get_string('bgcolor', 'format_onetopicplus'),
                     'help' => 'bgcolor',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 ),
                 'cssstyles' => array(
                     'default' => '',
                     'type' => PARAM_RAW,
-                    'label' => get_string('cssstyles', 'format_onetopic'),
+                    'label' => get_string('cssstyles', 'format_onetopicplus'),
                     'help' => 'cssstyles',
-                    'help_component' => 'format_onetopic',
+                    'help_component' => 'format_onetopicplus',
                 )
             );
 
@@ -814,7 +851,7 @@ class format_onetopic extends core_courseformat\base {
  * @param mixed $newvalue
  * @return \core\output\inplace_editable
  */
-function format_onetopics_inplace_editable($itemtype, $itemid, $newvalue) {
+function format_onetopicpluss_inplace_editable($itemtype, $itemid, $newvalue) {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/course/lib.php');
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
@@ -831,11 +868,11 @@ function format_onetopics_inplace_editable($itemtype, $itemid, $newvalue) {
  * Called by preg_replace_callback in renderer.php.
  *
  * @since 2.0
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_onetopic_replace_regularexpression {
+class format_onetopicplus_replace_regularexpression {
     /** @var string Text to search */
     public $_string_search;
 

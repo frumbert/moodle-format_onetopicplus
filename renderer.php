@@ -17,15 +17,16 @@
 /**
  * Onetopic renderer logic implementation.
  *
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \format_onetopic\singletab;
+use \format_onetopicplus\singletab;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/format/renderer.php');
+require_once($CFG->dirroot.'/course/format/topics/renderer.php');
 
 /**
  * Basic renderer for onetopic format.
@@ -33,7 +34,7 @@ require_once($CFG->dirroot.'/course/format/renderer.php');
  * @copyright 2012 David Herney Bernal - cirano
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_onetopic_renderer extends core_courseformat\output\section_renderer {
+class format_onetopicplus_renderer extends format_topics_renderer { // format_section_renderer_base {
 
 
     /** @var stdClass Local format data */
@@ -54,6 +55,8 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
      */
     public $showyuidialogue = false;
 
+    private $hascustomfieldsmod = false;
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -61,12 +64,15 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
      * @param string $target one of rendering target constants
      */
     public function __construct(moodle_page $page, $target) {
+    global $CFG;
         parent::__construct($page, $target);
 
         // Since format_topics_renderer::section_edit_controls() only displays the 'Set current section'
         // control when editing mode is on we need to be sure that the link 'Turn editing mode on' is
         // available for a user who does not have any other managing capability.
         $page->set_other_editing_capability('moodle/course:setcurrentsection');
+
+        $hascustomfieldsmod = (file_exists($CFG->dirroot . '/local/modcustomfields'));
     }
 
     /**
@@ -213,9 +219,17 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                 echo $this->start_section_list();
                 echo $this->section_header($thissection, $course, true);
 
-                if ($this->_course->templatetopic == format_onetopic::TEMPLATETOPIC_NOT) {
-                    echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
-                } else if ($this->_course->templatetopic == format_onetopic::TEMPLATETOPIC_LIST) {
+                if ($this->_course->templatetopic == format_onetopicplus::TEMPLATETOPIC_NOT) {
+                    if ($this->_course->activitydisplay == format_onetopicplus::ACTIVITYDISPLAY_LIST) {
+
+                        // use default course activity renderer
+                        echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
+                    } else {
+
+                        // use this formats activity renderer
+                        echo $this->course_section_cm_list($course,  $thissection, $displaysection);
+                    }
+                } else if ($this->_course->templatetopic == format_onetopicplus::TEMPLATETOPIC_LIST) {
                     echo $this->custom_course_section_cm_list($course, $thissection, $displaysection);
                 }
 
@@ -228,7 +242,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
 
         // Start single-section div.
         $cssclass = 'single-section onetopic';
-        $cssclass .= $this->_course->tabsview == format_onetopic::TABSVIEW_VERTICAL ? ' verticaltabs' : '';
+        $cssclass .= $this->_course->tabsview == format_onetopicplus::TABSVIEW_VERTICAL ? ' verticaltabs' : '';
         echo html_writer::start_tag('div', array('class' => $cssclass));
 
         // Move controls.
@@ -241,8 +255,8 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
         // Init custom tabs.
         $section = 0;
 
-        $tabs = new \format_onetopic\tabs();
-        $subtabs = new \format_onetopic\tabs();
+        $tabs = new \format_onetopicplus\tabs();
+        $subtabs = new \format_onetopicplus\tabs();
         $selectedparent = null;
         $parenttab = null;
         $firstsection = ($course->realcoursedisplay == COURSE_DISPLAY_MULTIPAGE) ? 1 : 0;
@@ -315,7 +329,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                         has_capability('moodle/course:viewhiddensections', $context));
 
                     if (!empty($availabilitytext)) {
-                        $uniqueid = 'format_onetopic_winfo_' . time() . '-' . rand(0, 1000);
+                        $uniqueid = 'format_onetopicplus_winfo_' . time() . '-' . rand(0, 1000);
                         $availablemessage = '<span class="iconhelp" data-infoid="' . $uniqueid . '">' .
                                             $this->output->pix_icon('e/help', get_string('info')) .
                                         '</span>';
@@ -362,7 +376,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                             if ($parentformatoptions['firsttabtext']) {
                                 $indextab->content = $parentformatoptions['firsttabtext'];
                             } else {
-                                $indextab->content = get_string('index', 'format_onetopic');
+                                $indextab->content = get_string('index', 'format_onetopicplus');
                             }
                             $indextab->title = $indextab->content;
                             $indextab->specialclass .= ' tab_initial ';
@@ -439,7 +453,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
             // Only can add sections if it does not exceed the maximum amount.
             if (count($sections) < $maxsections) {
 
-                $straddsection = get_string('increasesections', 'format_onetopic');
+                $straddsection = get_string('increasesections', 'format_onetopicplus');
                 $icon = $this->output->pix_icon('t/switch_plus', $straddsection);
                 $insertposition = $displaysection + 1;
 
@@ -505,9 +519,19 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                 $completioninfo = new completion_info($course);
                 echo $completioninfo->display_help_icon();
 
-                if ($this->_course->templatetopic == format_onetopic::TEMPLATETOPIC_NOT) {
-                    echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
-                } else if ($this->page->user_is_editing() || $this->_course->templatetopic == format_onetopic::TEMPLATETOPIC_LIST) {
+                if ($this->_course->templatetopic == format_onetopicplus::TEMPLATETOPIC_NOT) {
+
+                    if ($this->_course->activitydisplay == format_onetopicplus::ACTIVITYDISPLAY_LIST) {
+
+                        // will use the base class renderer, accessible through this->courserenderer-> methods
+                        echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
+
+                    } else {
+
+                        // will use a COPY OF the courserenderer methods which are inside THIS renderer instance
+                        echo $this->course_section_cm_list($course, $thissection, $displaysection);
+                    }
+                } else if ($this->page->user_is_editing() || $this->_course->templatetopic == format_onetopicplus::TEMPLATETOPIC_LIST) {
                     echo $this->custom_course_section_cm_list($course, $thissection, $displaysection);
                 }
 
@@ -522,12 +546,15 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
         }
 
         // Display section bottom navigation.
-        $sectionbottomnav = '';
-        $sectionbottomnav .= html_writer::start_tag('div', array('class' => 'section-navigation mdl-bottom'));
-        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
-        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
-        $sectionbottomnav .= html_writer::end_tag('div');
-        echo $sectionbottomnav;
+        $showbottomnav = !$course->hidebottomnav;
+        if ($showbottomnav) {
+            $sectionbottomnav = '';
+            $sectionbottomnav .= html_writer::start_tag('div', array('class' => 'section-navigation mdl-bottom'));
+            $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
+            $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
+            $sectionbottomnav .= html_writer::end_tag('div');
+            echo $sectionbottomnav;
+        }
 
         // Close content-section div.
         echo html_writer::end_tag('div');
@@ -538,20 +565,20 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
         if ($this->page->user_is_editing() && has_capability('moodle/course:update', $context)) {
 
             echo '<br class="utilities-separator" />';
-            print_collapsible_region_start('move-list-box clearfix collapsible mform', 'course_format_onetopic_config_movesection',
-                get_string('utilities', 'format_onetopic'), '', true);
+            print_collapsible_region_start('move-list-box clearfix collapsible mform', 'course_format_onetopicplus_config_movesection',
+                get_string('utilities', 'format_onetopicplus'), '', true);
 
             // Move controls.
             if ($canmove && !empty($movelisthtml)) {
                 echo html_writer::start_div("form-item clearfix");
                     echo html_writer::start_div("form-label");
-                        echo html_writer::tag('label', get_string('movesectionto', 'format_onetopic'));
+                        echo html_writer::tag('label', get_string('movesectionto', 'format_onetopicplus'));
                     echo html_writer::end_div();
                     echo html_writer::start_div("form-setting");
                         echo html_writer::tag('ul', $movelisthtml, array('class' => 'move-list'));
                     echo html_writer::end_div();
                     echo html_writer::start_div("form-description");
-                        echo html_writer::tag('p', get_string('movesectionto_help', 'format_onetopic'));
+                        echo html_writer::tag('p', get_string('movesectionto_help', 'format_onetopicplus'));
                     echo html_writer::end_div();
                 echo html_writer::end_div();
             }
@@ -564,21 +591,21 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
             global $USER;
             if (isset($USER->onetopic_da[$course->id]) && $USER->onetopic_da[$course->id]) {
                 $url->param('onetopic_da', 0);
-                $textbuttondisableajax = get_string('enable', 'format_onetopic');
+                $textbuttondisableajax = get_string('enable', 'format_onetopicplus');
             } else {
                 $url->param('onetopic_da', 1);
-                $textbuttondisableajax = get_string('disable', 'format_onetopic');
+                $textbuttondisableajax = get_string('disable', 'format_onetopicplus');
             }
 
             echo html_writer::start_div("form-item clearfix");
                 echo html_writer::start_div("form-label");
-                    echo html_writer::tag('label', get_string('disableajax', 'format_onetopic'));
+                    echo html_writer::tag('label', get_string('disableajax', 'format_onetopicplus'));
                 echo html_writer::end_div();
                 echo html_writer::start_div("form-setting");
                     echo html_writer::link($url, $textbuttondisableajax);
                 echo html_writer::end_div();
                 echo html_writer::start_div("form-description");
-                    echo html_writer::tag('p', get_string('disableajax_help', 'format_onetopic'));
+                    echo html_writer::tag('p', get_string('disableajax_help', 'format_onetopicplus'));
                 echo html_writer::end_div();
             echo html_writer::end_div();
 
@@ -587,19 +614,19 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                 $urlduplicate = new moodle_url('/course/format/onetopic/duplicate.php',
                                 array('courseid' => $course->id, 'section' => $displaysection, 'sesskey' => sesskey()));
 
-                $link = new action_link($urlduplicate, get_string('duplicate', 'format_onetopic'));
-                $link->add_action(new confirm_action(get_string('duplicate_confirm', 'format_onetopic'), null,
-                    get_string('duplicate', 'format_onetopic')));
+                $link = new action_link($urlduplicate, get_string('duplicate', 'format_onetopicplus'));
+                $link->add_action(new confirm_action(get_string('duplicate_confirm', 'format_onetopicplus'), null,
+                    get_string('duplicate', 'format_onetopicplus')));
 
                 echo html_writer::start_div("form-item clearfix");
                     echo html_writer::start_div("form-label");
-                        echo html_writer::tag('label', get_string('duplicatesection', 'format_onetopic'));
+                        echo html_writer::tag('label', get_string('duplicatesection', 'format_onetopicplus'));
                     echo html_writer::end_div();
                     echo html_writer::start_div("form-setting");
                         echo $this->render($link);
                     echo html_writer::end_div();
                     echo html_writer::start_div("form-description");
-                        echo html_writer::tag('p', get_string('duplicatesection_help', 'format_onetopic'));
+                        echo html_writer::tag('p', get_string('duplicatesection_help', 'format_onetopicplus'));
                     echo html_writer::end_div();
                 echo html_writer::end_div();
             }
@@ -727,12 +754,6 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
 
         $parentcontrols = parent::section_edit_control_items($course, $section, $onsectionpage);
 
-        // This disables the JavaScript handling of the items in the menu.
-        // Only needed as long as there is no full compatibility with moodle 4.0.
-        foreach ($parentcontrols as $k => $v) {
-            unset($parentcontrols[$k]['attr']['data-action']);
-        }
-
         // If the delete key exists, we are going to insert our controls after it.
         if (array_key_exists("delete", $parentcontrols)) {
             $url = new moodle_url('/course/editsection.php', array(
@@ -770,7 +791,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
      */
     protected function format_summary_text($section) {
 
-        if ($this->_course->templatetopic != format_onetopic::TEMPLATETOPIC_NOT) {
+        if ($this->_course->templatetopic != format_onetopicplus::TEMPLATETOPIC_NOT) {
             $section->summary = $this->replace_resources($section);
         }
 
@@ -822,7 +843,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
         if (!empty($section->sequence)) {
             $sectionmods = explode(",", $section->sequence);
 
-            $objreplace = new format_onetopic_replace_regularexpression();
+            $objreplace = new format_onetopicplus_replace_regularexpression();
 
             $completioninfo = new completion_info($course);
 
@@ -913,7 +934,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                 $availabilitytext = trim($this->courserenderer->course_section_cm_availability($mod));
 
                 if (!empty($availabilitytext)) {
-                    $uniqueid = 'format_onetopic_winfo_' . time() . '-' . rand(0, 1000);
+                    $uniqueid = 'format_onetopicplus_winfo_' . time() . '-' . rand(0, 1000);
                     $htmlresource .= '<span class="iconhelp" data-infoid="' . $uniqueid . '">' .
                                         $this->output->pix_icon('e/help', get_string('help')) .
                                      '</span>';
@@ -999,7 +1020,9 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
                     continue;
                 }
 
-                if ($modulehtml = $this->courserenderer->course_section_cm_list_item($course,
+                // TIM
+                // if ($modulehtml = $this->courserenderer->course_section_cm_list_item($course,
+                if ($modulehtml = $this->course_section_cm_list_item($course,
                         $completioninfo, $mod, $sectionreturn, $displayoptions)) {
                     $moduleshtml[$modnumber] = $modulehtml;
                 }
@@ -1036,10 +1059,10 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
     /**
      * Print the conditioned HTML according the format onetopic type configuration.
      *
-     * @param \format_onetopic\tabs $tabs Object with tabs list.
+     * @param \format_onetopicplus\tabs $tabs Object with tabs list.
      * @param boolean $assubtabs True: if current tabs are a second level tabs.
      */
-    private function print_tabs_structure(\format_onetopic\tabs $tabs, $assubtabs = false) {
+    private function print_tabs_structure(\format_onetopicplus\tabs $tabs, $assubtabs = false) {
 
         $list = $tabs->get_list();
         $tabstree = array();
@@ -1067,7 +1090,7 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
             }
         }
 
-        if ($this->_course->tabsview == format_onetopic::TABSVIEW_ONELINE) {
+        if ($this->_course->tabsview == format_onetopicplus::TABSVIEW_ONELINE) {
             echo html_writer::start_tag('div', array('class' => 'tabs-wrapper'));
             echo $this->output->tabtree($tabstree, $selected, $inactivetabs);
             echo html_writer::end_tag('div');
@@ -1075,5 +1098,229 @@ class format_onetopic_renderer extends core_courseformat\output\section_renderer
         } else {
             echo $this->output->tabtree($tabstree, $selected, $inactivetabs);
         }
+    }
+
+    /* ---------------------------------- begin mod ---------------------------------- */
+
+    /**
+     * Renders HTML to display a list of course modules in a course section
+     * Also displays "move here" controls in Javascript-disabled mode
+     *
+     * This function calls {@link core_course_renderer::course_section_cm()}
+     *
+     * @param stdClass $course course object
+     * @param int|stdClass|section_info $section relative section number or section object
+     * @param int $sectionreturn section number to return to
+     * @param int $displayoptions
+     * @return void
+     */
+    public function course_section_cm_list($course, $section, $sectionreturn = null, $displayoptions = array()) {
+        global $USER, $DB;
+
+        $output = '';
+        $modinfo = get_fast_modinfo($course);
+        if (is_object($section)) {
+            $section = $modinfo->get_section_info($section->section);
+        } else {
+            $section = $modinfo->get_section_info($section);
+        }
+        $completioninfo = new completion_info($course);
+
+        // check if we are currently in the process of moving a module with JavaScript disabled
+        $ismoving = $this->page->user_is_editing() && ismoving($course->id);
+        if ($ismoving) {
+            $movingpix = new pix_icon('movehere', get_string('movehere'), 'moodle', array('class' => 'movetarget'));
+            $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
+        }
+        // check for a module images
+        $displayoptions['cardimages'] = [];
+        $handler = local_modcustomfields\customfield\mod_handler::create();
+ 
+        // Get the list of modules visible to user (excluding the module being moved if there is one)
+        $moduleshtml = array();
+        if (!empty($modinfo->sections[$section->section])) {
+            foreach ($modinfo->sections[$section->section] as $modnumber) {
+                $mod = $modinfo->cms[$modnumber];
+
+                if ($ismoving and $mod->id == $USER->activitycopy) {
+                    // do not display moving mod
+                    continue;
+                }
+
+                if ($this->hascustomfieldsmod) {
+                    $datas = $handler->get_instance_data($mod->id);
+                    foreach ($datas as $data) {
+                        if (empty($data->get_value())) {
+                            continue;
+                        }
+                        if ($data->get_field()->get('shortname') === 'cardimage') {
+                            $displayoptions['cardimages'][$mod->id] = $data->get_value();
+                        }
+                    }
+                }
+
+                if ($modulehtml = $this->course_section_cm_list_item($course,
+                        $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+                    $moduleshtml[$modnumber] = $modulehtml;
+                }
+            }
+        }
+
+        $sectionoutput = '';
+        if (!empty($moduleshtml) || $ismoving) {
+            foreach ($moduleshtml as $modnumber => $modulehtml) {
+                if ($ismoving) {
+                    $movingurl = new moodle_url('/course/mod.php', array('moveto' => $modnumber, 'sesskey' => sesskey()));
+                    $sectionoutput .= html_writer::tag('li',
+                            html_writer::link($movingurl, $this->output->render($movingpix), array('title' => $strmovefull)),
+                            array('class' => 'movehere'));
+                }
+
+                $sectionoutput .= $modulehtml;
+            }
+
+            if ($ismoving) {
+                $movingurl = new moodle_url('/course/mod.php', array('movetosection' => $section->id, 'sesskey' => sesskey()));
+                $sectionoutput .= html_writer::tag('li',
+                        html_writer::link($movingurl, $this->output->render($movingpix), array('title' => $strmovefull)),
+                        array('class' => 'movehere'));
+            }
+        }
+
+        // Always output the section module list.
+        $output .= html_writer::tag('div', $sectionoutput, array('class' => 'section img-text card-deck'));
+
+        return $output;
+    }
+
+    /*
+     * Given some html, try to find andreturn the first image
+     *
+     * @param string $html
+     * @return string | false
+     */
+    protected function get_image_from_description($html){
+        if (strlen(trim($html)) === 0) return false;
+        $dom = new \DOMDocument;
+        $dom->loadHTML($html);
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $image) {
+            return $image->getAttribute('src');
+        }
+        return false;
+    }
+
+    /**
+     * Renders HTML to display one course module for display within a section.
+     *
+     * This function calls:
+     * {@link self::course_section_cm()}
+     *
+     * @param stdClass $course
+     * @param completion_info $completioninfo
+     * @param cm_info $mod
+     * @param int|null $sectionreturn
+     * @param array $displayoptions
+     * @return String
+     */
+    public function course_section_cm_list_item($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
+        $output = '';
+        if ($modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+            $output = $modulehtml;
+        }
+        return $output;
+    }
+
+    /**
+     * Renders HTML to display one course module for display within a section.
+     *
+     * This function calls:
+     * {@link core_course_renderer::course_section_cm()}
+     *
+     * @param stdClass $course
+     * @param completion_info $completioninfo
+     * @param cm_info $mod
+     * @param int|null $sectionreturn
+     * @param array $displayoptions
+     * @return String
+     */
+    public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn,
+            $displayoptions = array()) {
+        global $PAGE, $USER;
+
+        $unstyledmodules = ['label'];
+
+        if (!$mod->is_visible_on_course_page()) {
+            return '';
+        }
+
+        $template = new stdClass();
+        $template->mod = $mod;
+
+        if (in_array($mod->modname, $unstyledmodules)) {
+            $template->unstyled = true;
+        }
+
+        // Fetch activity dates.
+        $activitydates = [];
+        if ($course->showactivitydates) {
+            $activitydates = \core\activity_dates::get_dates_for_module($mod, $USER->id);
+        }
+
+        $template->text = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
+
+        // Fetch completion details.
+        $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;
+        $completiondetails = \core_completion\cm_completion_details::get_instance($mod, $USER->id, $showcompletionconditions);
+        $ismanualcompletion = $completiondetails->has_completion() && !$completiondetails->is_automatic();
+
+        $template->showcompletion = ($showcompletionconditions || $ismanualcompletion || $activitydates);
+        $template->completion = $this->output->activity_information($mod, $completiondetails, $activitydates);
+
+        $template->cmname = $this->courserenderer->course_section_cm_name($mod, $displayoptions);
+        $template->editing = $PAGE->user_is_editing();
+        $template->availability = $this->courserenderer->course_section_cm_availability($mod, $displayoptions);
+
+        if ($PAGE->user_is_editing()) {
+            $editactions = course_get_cm_edit_actions($mod, $mod->indent, $sectionreturn);
+            $template->editoptions = $this->courserenderer->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
+            $template->editoptions .= $mod->afterediticons;
+            $template->moveicons = course_get_cm_move($mod, $sectionreturn);
+        }
+
+        if (!empty($displayoptions['cardimages'][$mod->id])) {
+            $template->cardimage = $displayoptions['cardimages'][$mod->id];
+        } else if ($cardimage = $this->get_image_from_description($template->text)) {
+            $template->text = $this->removeImage($template->text, $cardimage);
+            $template->cardimage = $cardimage;
+        }
+
+        $template->showheader = (!empty($template->editing) || !empty($template->cardimage));
+        $template->showfooter = (!empty($template->completion) || !empty($template->availability) || !empty($template->duration));
+
+        $mustache = ($mod->modname === "label") ? "coursemodule-label" : "coursemodule";
+
+        return $this->render_from_template("format_onetopicplus/{$mustache}", $template);
+    }
+
+    /**
+     * Remove a whole image tag based on its source value from a html string
+     * @param string $html the source document
+     * @param string $image the src of the image
+     * @return string 
+     */
+    private function removeImage($html, $image) {
+    
+        $ar = explode($image,$html);
+        $left = substr($ar[0], 0, strrpos($ar[0], "<", -1));
+        $right = substr($ar[1], strpos($ar[1], ">") + 1);
+
+        $output = $left . $right;
+
+        // if we left and empty paragraph, remove that
+        $output = str_replace("<p dir=\"ltr\" style=\"text-align: left;\"><br></p>", '', $output);
+
+        return $output;
+
     }
 }

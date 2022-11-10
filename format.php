@@ -20,7 +20,7 @@
  * It is based of the "topics" format.
  *
  * @since 2.0
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -52,7 +52,7 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 $course->realcoursedisplay = property_exists($course, 'coursedisplay') ? $course->coursedisplay == COURSE_DISPLAY_MULTIPAGE : false;
 $course->coursedisplay = COURSE_DISPLAY_MULTIPAGE;
 
-$renderer = $PAGE->get_renderer('format_onetopic');
+$renderer = $PAGE->get_renderer('format_onetopicplus');
 
 $section = $displaysection;
 
@@ -72,6 +72,8 @@ if ($disableajax !== -1) {
     }
 }
 
+$o.= html_writer::tag('div', '', array('class' => 'left side'));
+
 $renderer->print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection);
 
 if ($renderer->showyuidialogue) {
@@ -89,4 +91,4 @@ $params = array(
         'right' => $OUTPUT->pix_icon('t/collapsed', ''),
     ]
 );
-$PAGE->requires->js_call_amd('format_onetopic/main', 'init', $params);
+$PAGE->requires->js_call_amd('format_onetopicplus/main', 'init', $params);

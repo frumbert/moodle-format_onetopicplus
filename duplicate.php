@@ -18,7 +18,7 @@
  * Duplicate resources on a section as a new section
  *
  * @since 2.8
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2015 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -57,7 +57,7 @@ echo $OUTPUT->header();
 if (!empty($sectioninfo)) {
 
     $pbar = new progress_bar('onetopic_duplicate_bar', 500, true);
-    $pbar->update_full(1, get_string('duplicating', 'format_onetopic'));
+    $pbar->update_full(1, get_string('duplicating', 'format_onetopicplus'));
 
     $courseformat = course_get_format($course);
 
@@ -65,7 +65,7 @@ if (!empty($sectioninfo)) {
 
     $numnewsection = $lastsectionnum + 1;
 
-    $pbar->update_full(5, get_string('creating_section', 'format_onetopic'));
+    $pbar->update_full(5, get_string('creating_section', 'format_onetopicplus'));
 
     // Assign same section info.
     $data = new stdClass();
@@ -124,7 +124,7 @@ if (!empty($sectioninfo)) {
     $course = course_get_format($course)->get_course();
     $modinfo = get_fast_modinfo($course);
 
-    $pbar->update_full(10, get_string('rebuild_course_cache', 'format_onetopic'));
+    $pbar->update_full(10, get_string('rebuild_course_cache', 'format_onetopicplus'));
     $newsectioninfo = $modinfo->get_section_info($numnewsection);
 
     $modules = array();
@@ -139,7 +139,7 @@ if (!empty($sectioninfo)) {
             $dataprogress->current = 0;
             $dataprogress->size = $progressbarelements;
             $k = 0;
-            $pbar->update_full(40, get_string('progress_counter', 'format_onetopic', $dataprogress));
+            $pbar->update_full(40, get_string('progress_counter', 'format_onetopicplus', $dataprogress));
             foreach ($sectionmods as $modnumber) {
                 $k++;
                 $mod = $modinfo->cms[$modnumber];
@@ -157,17 +157,17 @@ if (!empty($sectioninfo)) {
                 }
                 $dataprogress->current = $k;
                 $percent = 40 + ($k / $progressbarelements) * 60;
-                $pbar->update_full($percent, get_string('progress_counter', 'format_onetopic', $dataprogress));
+                $pbar->update_full($percent, get_string('progress_counter', 'format_onetopicplus', $dataprogress));
             }
         }
     } else {
-        $pbar->update_full(100, get_string('progress_full', 'format_onetopic'));
+        $pbar->update_full(100, get_string('progress_full', 'format_onetopicplus'));
     }
 
     $sectiontogo = $numnewsection;
 } else {
     $sectiontogo = $section;
-    echo get_string('error_nosectioninfo', 'format_onetopic');
+    echo get_string('error_nosectioninfo', 'format_onetopicplus');
     echo $OUTPUT->continue_button(course_get_url($course, $section));
     echo $OUTPUT->footer();
 }

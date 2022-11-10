@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'format_onetopic', language 'es'
+ * Strings for component 'format_onetopicplus', language 'es'
  *
  * @since 2.4
- * @package format_onetopic
+ * @package format_onetopicplus
  * @copyright 2012 David Herney Bernal - cirano
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

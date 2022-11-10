@@ -1,4 +1,4 @@
-@format @format_onetopic
+@format @format_onetopicplus
 Feature: Sections can be edited and deleted in Onetopic format
   In order to rearrange my course contents
   As a teacher
