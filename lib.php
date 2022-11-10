@@ -54,9 +54,18 @@ class format_onetopicplus extends format_base {
     /** @var int One line view */
     const TABSVIEW_ONELINE = 2;
 
+    // activity layouts 
     const ACTIVITYDISPLAY_LIST = 0;
     const ACTIVITYDISPLAY_TILEV = 1;
     const ACTIVITYDISPLAY_TILEH = 2;
+
+    // source of card images
+    const CARDIMAGE_NONE = 0;
+    const CARDIMAGE_GEN = 1;
+    const CARDIMAGE_HTML = 2;
+    const CARDIMAGE_META = 3;
+
+    const CARDIMAGE_META_FIELD_NAME = 'cardimage';
 
     /** @var bool If the class was previously instanced, in one execution cycle */
     private static $loaded = false;
@@ -358,6 +367,7 @@ class format_onetopicplus extends format_base {
      * @return array of options
      */
     public function course_format_options($foreditform = false) {
+    global $DB;
         static $courseformatoptions = false;
         if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
@@ -375,6 +385,10 @@ class format_onetopicplus extends format_base {
                     'type' => PARAM_INT
                 ),
                 'activitydisplay' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT
+                ),
+                'cardimage' => array(
                     'default' => 1,
                     'type' => PARAM_INT
                 ),
@@ -397,6 +411,26 @@ class format_onetopicplus extends format_base {
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
+            $CARD_IMAGE_FORMATS = array(
+                array(
+                    self::CARDIMAGE_NONE => new lang_string('cardimage_none', 'format_onetopicplus'),
+                    self::CARDIMAGE_GEN => new lang_string('cardimage_gen', 'format_onetopicplus'),
+                    self::CARDIMAGE_HTML => new lang_string('cardimage_html', 'format_onetopicplus')
+                )
+            );
+            // is local_metadata installed, and do we have a custom field defined for images in activities?
+            $dbman = $DB->get_manager();
+            if ($dbman->table_exists('customfield_category') && $dbman->table_exists('customfield_field')) {
+                if ($DB->record_exists_sql("
+                    select c.id from {customfield_category} c inner join {customfield_field} f
+                    on f.categoryid = c.id
+                    where c.component = 'local_modcustomfields'
+                    and area = 'mod'
+                    and f.shortname = " . self::CARDIMAGE_META_FIELD_NAME
+                )) {
+                    $CARD_IMAGE_FORMATS[] = [self::CARDIMAGE_META => new lang_string('cardimage_meta', 'format_onetopicplus')];
+                }
+            }
             $courseformatoptionsedit = array(
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
@@ -442,9 +476,9 @@ class format_onetopicplus extends format_base {
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
-                            0 => new lang_string('list'),
-                            1 => new lang_string('cards_v', 'format_onetopicplus'),
-                            2 => new lang_string('cards_h', 'format_onetopicplus')
+                            self::ACTIVITYDISPLAY_LIST => new lang_string('list'),
+                            self::ACTIVITYDISPLAY_TILEV => new lang_string('cards_v', 'format_onetopicplus'),
+                            self::ACTIVITYDISPLAY_TILEH => new lang_string('cards_h', 'format_onetopicplus')
                         )
                     ),
                 ),
@@ -470,6 +504,13 @@ class format_onetopicplus extends format_base {
                             self::TEMPLATETOPIC_LIST => new lang_string('templetetopic_list', 'format_onetopicplus')
                         )
                     ),
+                    'help' => 'templatetopic',
+                    'help_component' => 'format_onetopicplus',
+                ),
+                'cardimage' => array(
+                    'label' => new lang_string('cardimage', 'format_onetopicplus'),
+                    'element_type' => 'select',
+                    'element_attributes' => $CARD_IMAGE_FORMATS,
                     'help' => 'templatetopic',
                     'help_component' => 'format_onetopicplus',
                 ),
@@ -851,7 +892,7 @@ class format_onetopicplus extends format_base {
  * @param mixed $newvalue
  * @return \core\output\inplace_editable
  */
-function format_onetopicpluss_inplace_editable($itemtype, $itemid, $newvalue) {
+function format_onetopicplus_inplace_editable($itemtype, $itemid, $newvalue) {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/course/lib.php');
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {

@@ -23,6 +23,15 @@ OneTopic by: David Herney https://github.com/davidherney/moodle-format_onetopicp
 
 TopicActivityCards by: Andrew Hancox https://github.com/andrewhancox/format_topicsactivitycards
 
+INTEGRATIONS
+==========
+
+Custom card images can be extracted from custom fields for activity modules, if installed (https://moodle.org/plugins/local_modcustomfields), if you have a custom field with `shortname` = `cardimage`. The field type can be:
+
+- text - this will render the text directly (maybe your image is externally hosted on imgur.com etc)
+- image - using https://github.com/andrewhancox/moodle-customfield_image
+- file - using https://github.com/andrewhancox/moodle-customfield_file
+
 VERSION
 ==========
 2020-11-10: Mashed Topic Card Activities into OneTopic. Removed use of external metadata plugin for unsupported fields (duration, card-image). Added formatting options. Add ability to hide bottom section navigation controls. Responsive card layout based on Bootstrap.

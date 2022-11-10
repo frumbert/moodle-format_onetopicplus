@@ -72,7 +72,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         // available for a user who does not have any other managing capability.
         $page->set_other_editing_capability('moodle/course:setcurrentsection');
 
-        $hascustomfieldsmod = (file_exists($CFG->dirroot . '/local/modcustomfields'));
+        $this->hascustomfieldsmod = (file_exists($CFG->dirroot . '/local/modcustomfields'));
     }
 
     /**
@@ -1115,7 +1115,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
      * @return void
      */
     public function course_section_cm_list($course, $section, $sectionreturn = null, $displayoptions = array()) {
-        global $USER, $DB;
+        global $USER, $DB, $OUTPUT;
 
         $output = '';
         $modinfo = get_fast_modinfo($course);
@@ -1147,16 +1147,28 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                     continue;
                 }
 
-                if ($this->hascustomfieldsmod) {
-                    $datas = $handler->get_instance_data($mod->id);
-                    foreach ($datas as $data) {
-                        if (empty($data->get_value())) {
-                            continue;
+                switch ($course->cardimage) {
+                    case format_onetopicplus::CARDIMAGE_GEN:
+                        $displayotions['cardimages'][$mod->id] = $OUTPUT->get_generated_image_for_id($mod->id);
+                        break;
+
+                    case format_onetopicplus::CARDIMAGE_META:
+                        if ($this->hascustomfieldsmod) {
+                            $datas = $handler->get_instance_data($mod->id);
+                            foreach ($datas as $data) {
+                                if (empty($data->get_value())) {
+                                    continue;
+                                }
+                                if ($data->get_field()->get('shortname') === 'cardimage') {
+                                    $displayoptions['cardimages'][$mod->id] = $data->get_value();
+                                }
+                            }
                         }
-                        if ($data->get_field()->get('shortname') === 'cardimage') {
-                            $displayoptions['cardimages'][$mod->id] = $data->get_value();
-                        }
-                    }
+                        break;
+                    
+                    case format_onetopicplus::CARDIMAGE_NONE:
+                        $displayoptions['cardimages'] = '';
+                        break;
                 }
 
                 if ($modulehtml = $this->course_section_cm_list_item($course,
@@ -1290,7 +1302,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
         if (!empty($displayoptions['cardimages'][$mod->id])) {
             $template->cardimage = $displayoptions['cardimages'][$mod->id];
-        } else if ($cardimage = $this->get_image_from_description($template->text)) {
+        } else if ($course->cardimage == format_onetopicplus::CARDIMAGE_HTML && $cardimage = $this->get_image_from_description($template->text)) {
             $template->text = $this->removeImage($template->text, $cardimage);
             $template->cardimage = $cardimage;
         }

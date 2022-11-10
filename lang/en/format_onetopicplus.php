@@ -42,6 +42,17 @@ $string['list'] = 'List';
 $string['cards_h'] = 'Cards (Image @ left)';
 $string['cards_v'] = 'Cards (Image @ top)';
 
+$string['cardimage'] = 'Card Image Source';
+$string['cardimage_help'] = "Card Images can be:\n
+- Turned off (none)\n
+- Generated (psuedo-random image)\n
+- First image extracted from the description HTML\n
+- Specified in module custom fields (see README.md)";
+$string['cardimage_none'] = 'None';
+$string['cardimage_gen'] = 'Psuedo-random';
+$string['cardimage_html'] = 'Extracted';
+$string['cardimage_meta'] = 'Metadata';
+
 $string['movesectionto'] = 'Move current topic';
 $string['movesectionto_help'] = 'Move current topic to left/right of selected topic';
 
