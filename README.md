@@ -7,9 +7,9 @@ Moodle 4.0+ not yet supported.
 
 This course format shows Sections as Tabs, and (optionall) Activities within each section as Cards.
 
-![screenshot](screenshot.png)
+![screenshot](images/screenshot.png)
 
-(BTW; Labels aren't rendered as Cards, they are left raw).
+You can 
 
 QUICK INSTALL
 ==============
@@ -28,9 +28,17 @@ INTEGRATIONS
 
 Custom card images can be extracted from custom fields for activity modules, if installed (https://moodle.org/plugins/local_modcustomfields), if you have a custom field with `shortname` = `cardimage`. The field type can be:
 
-- text - this will render the text directly (maybe your image is externally hosted on imgur.com etc)
+- text - this will render the text directly (maybe your image is externally hosted on imgur.com, or base64 encoded, etc)
 - image - using https://github.com/andrewhancox/moodle-customfield_image
 - file - using https://github.com/andrewhancox/moodle-customfield_file
+
+Cards can have images on the top or on the left or not-at-all. The image source can be extracted from the description field (finds and uses the first image, then removes it from the description) or a randomly generated image can be used.
+
+![screenshot](images/cards-imagegen-top.png)
+
+![screenshot](images/cards-left.png)
+
+![screenshot](images/cards-no-image.png)
 
 VERSION
 ==========
