@@ -302,6 +302,15 @@
     margin-bottom : 1rem;
     font-size: 1.125rem;
 }
+
+.format-onetopicplus .card.activity .card-footer {
+    min-height: 61px;
+}
+
+.format-onetopicplus .card.activity .card-footer .availabilityinfo,
+.format-onetopicplus .card.activity .card-footer .contentafterlink {
+    margin: 0.5rem 0 0;
+}
 /* .format-onetopicplus .section.card-deck > div.card.activity {
     max-width: 24.5%;
 border: 1px solid red;

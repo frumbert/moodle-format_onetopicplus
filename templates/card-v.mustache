@@ -6,19 +6,18 @@
 
     {{#showheader}}
         <div class="card-header" style="{{#cardimage}}background-image:url({{{cardimage}}});{{/cardimage}}">
-            {{#editing}}
-                {{{moveicons}}}
-                <span class="float-right editoptions">
-                    {{{editoptions}}}
+        {{#editing}}
+            {{{moveicons}}}
+            <span class="float-right editoptions">
+                {{{editoptions}}}
+            </span>
+            {{#availability}}
+                <span class="availability">
+                    {{{availability}}}
                 </span>
-
-                {{#availability}}
-                    <span class="availability">
-                        {{{availability}}}
-                    </span>
-                {{/availability}}
-            {{/editing}}
-            <span></span>
+            {{/availability}}
+        {{/editing}}
+        <span class="clearspace"></span>
         </div>
     {{/showheader}}
     <div class="card-body">

@@ -465,7 +465,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                 if ($showsubtabs) {
                     // Increase number of sections in child tabs.
                     $paramstotabs['aschild'] = 1;
-                    $url = new moodle_url('/course/format/onetopic/changenumsections.php', $paramstotabs);
+                    $url = new moodle_url('/course/format/onetopicplus/changenumsections.php', $paramstotabs);
                     $newtab = new singletab('add', $icon, $url, s($straddsection));
                     $selectedsubtabs->add_child($newtab);
 
@@ -477,7 +477,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
                 $paramstotabs['aschild'] = 0;
                 $paramstotabs['insertsection'] = $insertposition;
-                $url = new moodle_url('/course/format/onetopic/changenumsections.php', $paramstotabs);
+                $url = new moodle_url('/course/format/onetopicplus/changenumsections.php', $paramstotabs);
                 $newtab = new singletab('add', $icon, $url, s($straddsection));
                 $tabs->add($newtab);
 
@@ -611,7 +611,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
             // Duplicate current section option.
             if (has_capability('moodle/course:manageactivities', $context)) {
-                $urlduplicate = new moodle_url('/course/format/onetopic/duplicate.php',
+                $urlduplicate = new moodle_url('/course/format/onetopicplus/duplicate.php',
                                 array('courseid' => $course->id, 'section' => $displaysection, 'sesskey' => sesskey()));
 
                 $link = new action_link($urlduplicate, get_string('duplicate', 'format_onetopicplus'));
@@ -1213,8 +1213,18 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             }
         }
 
+        $renderclass = '';
+        switch ($course->activitydisplay) {
+            case format_onetopicplus::ACTIVITYDISPLAY_LIST:
+                $renderclass = 'display-list'; break;
+            case format_onetopicplus::ACTIVITYDISPLAY_TILEH:
+                $renderclass = 'display-cardh'; break;
+            case format_onetopicplus::ACTIVITYDISPLAY_TILEV:
+                $renderclass = 'display-cardv'; break;
+        }
+
         // Always output the section module list.
-        $output .= html_writer::tag('div', $sectionoutput, array('class' => 'section img-text card-deck'));
+        $output .= html_writer::tag('div', $sectionoutput, array('class' => 'section card-deck ' . $renderclass));
 
         return $output;
     }
@@ -1293,6 +1303,8 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             $activitydates = \core\activity_dates::get_dates_for_module($mod, $USER->id);
         }
 
+        $template->mod->extraclasses .= " mb-3";
+
         $template->text = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
 
         // Fetch completion details.
@@ -1322,11 +1334,19 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
 
         $template->showheader = (!empty($template->editing) || !empty($template->cardimage));
-        $template->showfooter = (!empty($template->completion) || !empty($template->availability) || !empty($template->duration));
+        $template->showfooter = (!empty($template->completion) || !empty($template->availability) || !empty($template->duration) || $template->editing);
 
-        $mustache = ($mod->modname === "label") ? "coursemodule-label" : "coursemodule";
+        // choose rendering template for this tile
+        if ($mod->modname === "label") {
+            return $this->render_from_template("format_onetopicplus/label", $template);
+        } elseif ($course->activitydisplay === format_onetopicplus::ACTIVITYDISPLAY_TILEH) {
+            return $this->render_from_template("format_onetopicplus/card-h", $template);
+        } elseif ($course->activitydisplay === format_onetopicplus::ACTIVITYDISPLAY_TILEV) {
+            return $this->render_from_template("format_onetopicplus/card-v", $template);
+        }
 
-        return $this->render_from_template("format_onetopicplus/{$mustache}", $template);
+        // shouldn't happen
+        print_error('cannotopentemplate', 'onetopicplus', $PAGE->url, 'undefined');
     }
 
     /**

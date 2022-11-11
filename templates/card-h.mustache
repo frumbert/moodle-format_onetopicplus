@@ -1,0 +1,45 @@
+<div
+     id="module-{{mod.id}}"
+     data-region="module"
+     data-module="{{mod.id}}"
+     class="card {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}} activity type-{{mod.modname}} {{mod.extraclasses}}">
+  <div class="row g-0 flex-fill">
+    {{#cardimage}}
+    <div class="col-md-4">
+      <img src="{{{cardimage}}}" class="img-fluid rounded mt-2 ml-2">
+        {{#editing}}
+            {{{moveicons}}}
+            <span class="float-right editoptions">
+                {{{editoptions}}}
+            </span>
+        {{/editing}}
+    </div>
+    {{/cardimage}}
+    <div class="{{#cardimage}}col-md-8 pl-0{{/cardimage}}{{^cardimage}}col-md-12{{/cardimage}}">
+      <div class="card-body">
+        {{#cmname}}<h5 class="card-title">{{{cmname}}}</h5>{{/cmname}}
+        <div class="card-text">{{#text}}
+            <div class="text {{^mod.uservisible}} contentwithoutlink dimmed dimmed_text {{/mod.uservisible}}">
+                {{{text}}}
+            </div>
+        {{/text}}</div>
+        {{#mod.afterlink}}
+            <p class="card-text"><small class="text-muted">
+                {{{mod.afterlink}}}
+            </p>
+        {{/mod.afterlink}}
+      </div>
+    </div>
+  </div>
+{{#showfooter}}
+  <div class="row g-0">
+    <div class="col-md-12">
+        <div class="card-footer">
+            {{{duration}}}
+            {{{completion}}}
+            {{{availability}}}
+        </div>
+    </div>
+  </div>
+{{/showfooter}}
+</div>
