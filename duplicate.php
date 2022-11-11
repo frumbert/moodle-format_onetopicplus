@@ -32,7 +32,7 @@ $courseid = required_param('courseid', PARAM_INT);
 $section = required_param('section', PARAM_INT);
 $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
 
-$PAGE->set_url('/course/format/onetopic/duplicate.php', array('courseid' => $courseid, 'section' => $section));
+$PAGE->set_url('/course/format/onetopicplus/duplicate.php', array('courseid' => $courseid, 'section' => $section));
 
 // Authorization checks.
 require_login($course);

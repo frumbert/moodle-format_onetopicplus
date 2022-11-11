@@ -38,7 +38,7 @@ $aschild = optional_param('aschild', 0, PARAM_BOOL);               // It is crea
 $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
 $courseformatoptions = course_get_format($course)->get_format_options();
 
-$PAGE->set_url('/course/format/onetopic/changenumsections.php', array('courseid' => $courseid));
+$PAGE->set_url('/course/format/onetopicplus/changenumsections.php', array('courseid' => $courseid));
 // Authorisation checks.
 require_login($course);
 require_capability('moodle/course:update', context_course::instance($course->id));
