@@ -290,41 +290,34 @@
     }
 }
 
-
-.format-onetopicplus .card.activity .card-header {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    padding-bottom: 8em;
+.format-onetopicplus .onetopicplus-wrapper .activity {
+    background: white;
+    border: 1px solid #dee2e6;
+}
+.format-onetopicplus .onetopicplus-wrapper.display-cardh .activity .cardimage img {
+    width: 100%;
+    height: auto;
 }
 
-.format-onetopicplus .card.activity .card-body div.cmname {
-    margin-bottom : 1rem;
-    font-size: 1.125rem;
+/* used to specify the height of the image/header for vertical tiles */
+.format-onetopicplus .onetopicplus-wrapper.display-cardv .height-control {
+    min-height: 128px;
 }
 
-.format-onetopicplus .card.activity .card-footer {
-    min-height: 61px;
+.format-onetopicplus .onetopicplus-wrapper.display-cardh .activity .header,
+.format-onetopicplus .onetopicplus-wrapper .activity .footer {
+    background: #f2f2f2;
+}
+.format-onetopicplus .onetopicplus-wrapper.display-cardh .activity .header {
+    border-bottom: 1px solid #dee2e6;
+}
+.format-onetopicplus .onetopicplus-wrapper .activity .footer {
+    border-top: 1px solid #dee2e6;
+    min-height: 70px;
+}
+.format-onetopicplus .onetopicplus-wrapper .activity .footer .availabilityinfo {
+    margin-left: 0;
 }
 
-.format-onetopicplus .card.activity .card-footer .availabilityinfo,
-.format-onetopicplus .card.activity .card-footer .contentafterlink {
-    margin: 0.5rem 0 0;
-}
-/* .format-onetopicplus .section.card-deck > div.card.activity {
-    max-width: 24.5%;
-border: 1px solid red;
-}
 
-@media only screen and (max-width: 576px) {
-    .format-onetopicplus .section.card-deck > div.card.activity {
-        width: 100%;
-border: 1px solid blue;
-    }
-}
-@media only screen and (min-with: 577px) and (max-width: 959px) {
-    .format-onetopicplus .section.card-deck > div.card.activity {
-        max-width: 49%;
-border: 1px solid yellow;
-    }
-} */
+

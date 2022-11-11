@@ -1,0 +1,46 @@
+<div class="wrapper p-2" id="module-{{mod.id}}"
+  data-region="module"
+  data-module="{{mod.id}}"
+>
+  <div class="container-fluid activity type-{{mod.modname}} {{mod.extraclasses}} shadow-sm h-100 d-flex flex-column align-items-stretch">
+  {{#showheader}}
+    <div class="row header">
+      <div class="col col-md-12 p-3">
+        {{#editing}}
+            {{{moveicons}}}
+            <span class="float-right editoptions">
+                {{{editoptions}}}
+            </span>
+        {{/editing}}
+      </div>
+    </div>
+  {{/showheader}}
+    {{#showcardimages}}
+    <div class="row image embed-responsive-16by9 p-0" style="background-image:url({{{cardimage}}})">
+      <div class="embed-responsive-item w-100 height-control"></div>
+    </div>
+    {{/showcardimages}}
+    <div class="row content flex-fill {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
+      <h5 class="card-title mt-3">{{{cmname}}}</h5>
+      {{#text}}
+      <div class="text {{^mod.uservisible}} contentwithoutlink dimmed dimmed_text {{/mod.uservisible}}">
+          {{{text}}}
+      </div>
+      {{/text}}
+      {{#mod.afterlink}}
+      <p class="text-muted">
+        <small>{{{mod.afterlink}}}</small>
+      </p>
+      {{/mod.afterlink}}
+    </div>
+  {{#showfooter}}
+    <div class="row footer">
+      <div class="col p-3">
+        {{{duration}}}
+        {{{completion}}}
+        {{{availability}}}
+      </div>
+    </div>
+  {{/showfooter}}
+  </div>
+</div>

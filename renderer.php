@@ -241,7 +241,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
 
         // Start single-section div.
-        $cssclass = 'single-section onetopic';
+        $cssclass = 'single-section onetopicplus';
         $cssclass .= $this->_course->tabsview == format_onetopicplus::TABSVIEW_VERTICAL ? ' verticaltabs' : '';
         echo html_writer::start_tag('div', array('class' => $cssclass));
 
@@ -1223,8 +1223,13 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                 $renderclass = 'display-cardv'; break;
         }
 
+        $tmpl = new stdClass();
+        $tmpl->output = $sectionoutput;
+        $tmpl->classname = 'onetopicplus-wrapper ' . $renderclass;
+
         // Always output the section module list.
-        $output .= html_writer::tag('div', $sectionoutput, array('class' => 'section card-deck ' . $renderclass));
+        $output .= $this->render_from_template("format_onetopicplus/grid", $tmpl);
+//        $output .= html_writer::tag('div', $sectionoutput, array('class' => 'section' . $renderclass));
 
         return $output;
     }
@@ -1304,7 +1309,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
 
         $template->mod->extraclasses .= " mb-3";
-
+        $template->cardimage = '';
         $template->text = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
 
         // Fetch completion details.
@@ -1333,16 +1338,17 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             $template->cardimage = $cardimage;
         }
 
-        $template->showheader = (!empty($template->editing) || !empty($template->cardimage));
-        $template->showfooter = (!empty($template->completion) || !empty($template->availability) || !empty($template->duration) || $template->editing);
+        $template->showcardimages = ($course->cardimage !== format_onetopicplus::CARDIMAGE_NONE) && (!empty($template->cardimage));
+        $template->showheader = (!empty($template->editing));
+        $template->showfooter = (!empty($template->completion) || !empty($template->availability) || !empty($template->duration));
 
         // choose rendering template for this tile
         if ($mod->modname === "label") {
             return $this->render_from_template("format_onetopicplus/label", $template);
         } elseif ($course->activitydisplay === format_onetopicplus::ACTIVITYDISPLAY_TILEH) {
-            return $this->render_from_template("format_onetopicplus/card-h", $template);
+            return $this->render_from_template("format_onetopicplus/tile-h", $template);
         } elseif ($course->activitydisplay === format_onetopicplus::ACTIVITYDISPLAY_TILEV) {
-            return $this->render_from_template("format_onetopicplus/card-v", $template);
+            return $this->render_from_template("format_onetopicplus/tile-v", $template);
         }
 
         // shouldn't happen

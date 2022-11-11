@@ -1,0 +1,51 @@
+<div class="wrapper p-2" id="module-{{mod.id}}"
+  data-region="module"
+  data-module="{{mod.id}}"
+>
+  <div class="container-fluid activity type-{{mod.modname}} {{mod.extraclasses}} shadow-sm h-100 d-flex flex-column align-items-stretch">
+  {{#showheader}}
+    <div class="row header">
+      <div class="col p-3">
+        {{#editing}}
+            {{{moveicons}}}
+            <span class="float-right editoptions">
+                {{{editoptions}}}
+            </span>
+        {{/editing}}
+      </div>
+    </div>
+  {{/showheader}}
+    <div class="row content flex-fill">
+      {{#showcardimages}}
+      <div class="col col-sm-4 cardimage p-0">
+        <img src="{{{cardimage}}}" class="img-fluid mt-3 mb-3" alt="decorative image">
+      </div>
+      <div class="col-sm-8 {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
+      {{/showcardimages}}
+      {{^showcardimages}}
+      <div class="col {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
+      {{/showcardimages}}
+        <h5 class="card-title mt-3">{{{cmname}}}</h5>
+        {{#text}}
+        <div class="text {{^mod.uservisible}} contentwithoutlink dimmed dimmed_text {{/mod.uservisible}}">
+            {{{text}}}
+        </div>
+        {{/text}}
+        {{#mod.afterlink}}
+        <p class="text-muted">
+          <small>{{{mod.afterlink}}}</small>
+        </p>
+        {{/mod.afterlink}}
+      </div>
+    </div>
+  {{#showfooter}}
+    <div class="row footer">
+      <div class="col p-3">
+        {{{duration}}}
+        {{{completion}}}
+        {{{availability}}}
+      </div>
+    </div>
+  {{/showfooter}}
+  </div>
+</div>
