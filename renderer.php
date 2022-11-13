@@ -219,6 +219,10 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                 echo $this->start_section_list();
                 echo $this->section_header($thissection, $course, true);
 
+                if ($course->showsummary !== 0) {
+                    echo format_onetopicplus_output_course_summary($this, $this->_course);
+                }
+
                 if ($this->_course->templatetopic == format_onetopicplus::TEMPLATETOPIC_NOT) {
                     if ($this->_course->activitydisplay == format_onetopicplus::ACTIVITYDISPLAY_LIST) {
 
@@ -515,6 +519,9 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                 // The requested section page.
                 $thissection = $sections[$displaysection];
                 echo $this->section_header($thissection, $course, true);
+                if ($thissection->section === 0 && $course->showsummary !== 0) {
+                    echo format_onetopicplus_output_course_summary($this, $course);
+                }
                 // Show completion help icon.
                 $completioninfo = new completion_info($course);
                 echo $completioninfo->display_help_icon();

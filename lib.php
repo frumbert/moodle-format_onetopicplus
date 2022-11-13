@@ -384,6 +384,10 @@ class format_onetopicplus extends format_base {
                     'default' => 0,
                     'type' => PARAM_INT
                 ),
+                'showsummary' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                ),
                 'activitydisplay' => array(
                     'default' => 1,
                     'type' => PARAM_INT
@@ -460,6 +464,18 @@ class format_onetopicplus extends format_base {
                 'hidebottomnav' => array(
                     'label' => get_string('hidebottomnav', 'format_onetopicplus'),
                     'help' => 'hidebottomnav',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    ),
+                ),
+                'showsummary' => array(
+                    'label' => get_string('showsummary', 'format_onetopicplus'),
+                    'help' => 'showsummary',
                     'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(
@@ -901,6 +917,13 @@ function format_onetopicplus_inplace_editable($itemtype, $itemid, $newvalue) {
             array($itemid, 'onetopic'), MUST_EXIST);
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
+}
+
+function format_onetopicplus_output_course_summary(format_onetopicplus_renderer $instance, $course) {
+    $template = new stdClass();
+    $template->classname = 'onetopicplus-coursesummary';
+    $template->output = format_text($course->summary, $course->summaryformat);
+    return $instance->render_from_template("format_onetopicplus/summary", $template);
 }
 
 /**

@@ -96,6 +96,9 @@ $string['coursedisplay_help'] = 'This define as display the section 0: as a firs
 $string['coursedisplay_single'] = 'As tab';
 $string['coursedisplay_multi'] = 'Before the tabs';
 
+$string['showsummary'] = 'Show course summary';
+$string['showsummary_help'] = 'Display the course summary/description at the top of the page/home tab';
+
 $string['templatetopic'] = 'Use topic summary as template';
 $string['templatetopic_help'] = 'This option is used in order to use the summary topic as a template. If it is used as template, you can include the resources in the content, not only as tradicional moodle\'s lists. <br />In order to include a resource, write the resource name between double brackets, for example: [[News forum]]. This functionality is similar to activity name filter, however, it is different because the user can chose if included the resource icon and decide than activities are be included.';
 $string['templetetopic_not'] = 'No, display as default';
