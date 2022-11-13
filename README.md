@@ -32,11 +32,21 @@ Custom card images can be extracted from custom fields for activity modules, if 
 - image - using https://github.com/andrewhancox/moodle-customfield_image
 - file - using https://github.com/andrewhancox/moodle-customfield_file
 
+Format options:
+
+![screenshot](images/format-options.png)
+
 Cards can have images on the top or on the left or not-at-all. The image source can be extracted from the description field (finds and uses the first image, then removes it from the description) or a randomly generated image can be used.
+
+Images onthe top of the tile (with generated image)
 
 ![screenshot](images/cards-imagegen-top.png)
 
+Images on the left of the tile (with generated image)
+
 ![screenshot](images/cards-left.png)
+
+No image on the tile
 
 ![screenshot](images/cards-no-image.png)
 
