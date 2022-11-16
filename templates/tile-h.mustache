@@ -17,7 +17,7 @@
   {{/showheader}}
     <div class="row content flex-fill">
       {{#showcardimages}}
-      <div class="col col-sm-4 cardimage p-0">
+      <div class="col col-sm-4 cardimage p-0 {{cardimageclass}}">
         <img src="{{{cardimage}}}" class="img-fluid mt-3 mb-3" alt="decorative image">
       </div>
       <div class="col-sm-8 {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
