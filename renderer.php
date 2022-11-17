@@ -1389,4 +1389,6 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         return $output;
 
     }
+
+
 }
