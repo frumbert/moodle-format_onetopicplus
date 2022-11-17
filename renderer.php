@@ -1353,8 +1353,8 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
 
         $template->showcardimages = ($course->cardimage !== format_onetopicplus::CARDIMAGE_NONE) && (!empty($template->cardimage));
-        $template->showheader = (!empty($template->editing));
-        $template->showfooter = (!empty($template->completion) || !empty($template->availability) || !empty($template->duration));
+        $template->showheader = (!$this->is_empty($template->editing));
+        $template->showfooter = (!$this->is_empty($template->completion) || !$this->is_empty($template->availability) || !$this->is_empty($template->duration));
 
         // choose rendering template for this tile
         if ($mod->modname === "label") {
@@ -1367,6 +1367,14 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
         // shouldn't happen
         print_error('cannotopentemplate', 'onetopicplus', $PAGE->url, 'undefined');
+    }
+
+    // empty might still contain empty html tags
+    // after collapsing tags and whitespace, is it still empty?
+    private function is_empty($value) {
+        $value = strip_tags($value);
+        $value = trim($value);
+        return empty($value);
     }
 
     /**
