@@ -367,7 +367,7 @@ class format_onetopicplus extends format_base {
      * @return array of options
      */
     public function course_format_options($foreditform = false) {
-    global $DB;
+    global $DB, $CFG;
         static $courseformatoptions = false;
         if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
@@ -411,8 +411,18 @@ class format_onetopicplus extends format_base {
                 'tabsview' => array(
                     'default' => 0,
                     'type' => PARAM_INT
+                ),
+                'activityicons' => array(
+                    'default' => 1,
+                    'type' => PARAM_INT
                 )
             );
+            if (!empty($CFG->usetags)) {
+                $courseformatoptions['showtags'] = array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                );
+            }
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
             $CARD_IMAGE_FORMATS = array(
@@ -554,8 +564,35 @@ class format_onetopicplus extends format_base {
                     ),
                     'help' => 'tabsview',
                     'help_component' => 'format_onetopicplus',
+                ),
+                'activityicons' => array(
+                    'label' => get_string('showactivityicons', 'format_onetopicplus'),
+                    'help' => 'showactivityicons',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    )
                 )
             );
+            if (!empty($CFG->usetags)) {
+                $courseformatoptionsedit['showtags'] = array(
+                    'label' => get_string('showtags', 'format_onetopicplus'),
+                    'help' => 'showtags',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    )
+                );
+            }
+
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;

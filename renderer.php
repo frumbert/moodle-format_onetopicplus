@@ -1299,7 +1299,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn,
             $displayoptions = array()) {
-        global $PAGE, $USER;
+        global $PAGE, $USER, $CFG;
 
         $unstyledmodules = ['label'];
 
@@ -1322,6 +1322,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
         $template->mod->extraclasses .= " mb-3";
         $template->cardimage = '';
+        $template->tags = '';
         $template->text = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
 
         // Fetch completion details.
@@ -1331,11 +1332,12 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
         $template->showcompletion = ($showcompletionconditions || $ismanualcompletion || $activitydates);
         $template->completion = $this->output->activity_information($mod, $completiondetails, $activitydates);
-
         $template->cmname = $this->courserenderer->course_section_cm_name($mod, $displayoptions);
+        $template->showicon = ($course->templatetopic_icons !== 0);
         $template->editing = $PAGE->user_is_editing();
         $template->availability = $this->courserenderer->course_section_cm_availability($mod, $displayoptions);
 
+        // when editing, add buttons for edit/move
         if ($PAGE->user_is_editing()) {
             $editactions = course_get_cm_edit_actions($mod, $mod->indent, $sectionreturn);
             $template->editoptions = $this->courserenderer->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
@@ -1343,6 +1345,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             $template->moveicons = course_get_cm_move($mod, $sectionreturn);
         }
 
+        // figure out image for card (if not already done so)
         if (!empty($displayoptions['cardimages'][$mod->id])) {
             $template->cardimage = $displayoptions['cardimages'][$mod->id];
             $template->cardimageclass = $displayoptions['cardimageclass'][$mod->id];
@@ -1352,6 +1355,19 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             $template->cardimageclass = 'description';
         }
 
+        // gather tags for the module instance
+        if ($course->showtags && !empty($CFG->usetags)) {
+            $cmcontext = \context_module::instance($mod->id)->id;
+            $tags = core_tag_collection::get_tag_cloud(1,
+                false,
+                10,
+                'name', '', $this->page->context->id, $cmcontext);
+            if ($tags->get_count() > 0) {
+                $template->tags = $tags->export_for_template($this->output);
+            }
+        }
+
+        // visibility helpers
         $template->showcardimages = ($course->cardimage !== format_onetopicplus::CARDIMAGE_NONE) && (!empty($template->cardimage));
         $template->showheader = (!$this->is_empty($template->editing));
         $template->showfooter = (!$this->is_empty($template->completion) || !$this->is_empty($template->availability) || !$this->is_empty($template->duration));

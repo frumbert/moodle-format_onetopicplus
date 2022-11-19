@@ -111,7 +111,7 @@
 }
 
 .format-onetopicplus li.movehere img.icon {
-    width: 100%;
+    width: 25%;
     height: auto;
     margin: 1rem 0;
 }
@@ -324,5 +324,12 @@
     margin-left: 0;
 }
 
+/* if activity icons are turned off, we hide them using styles */
+.format-onetopicplus .onetopicplus-wrapper .hide-icon .aalink img {
+    display: none;
+}
 
-
+.format-onetopicplus .onetopicplus-wrapper .aalink .instancename {
+    font-weight: 500;
+    font-size: 24px;
+}

@@ -53,6 +53,11 @@ $string['cardimage_gen'] = 'Psuedo-random';
 $string['cardimage_html'] = 'Extracted from description';
 $string['cardimage_meta'] = 'Module metadata (cardimage)';
 
+$string['showtags'] = 'Show tags';
+$string['showtags_help'] = 'Lists module instance tags (as badges) inside the tile body';
+$string['showactivityicons'] = 'Show activity icons in tiles';
+$string['showactivityicons_help'] = 'Show the activity type icon (applies to Tile layouts only)';
+
 $string['movesectionto'] = 'Move current topic';
 $string['movesectionto_help'] = 'Move current topic to left/right of selected topic';
 

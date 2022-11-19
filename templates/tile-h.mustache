@@ -18,19 +18,27 @@
     <div class="row content flex-fill">
       {{#showcardimages}}
       <div class="col col-sm-4 cardimage p-0 {{cardimageclass}}">
-        <img src="{{{cardimage}}}" class="img-fluid mt-3 mb-3" alt="decorative image">
+        <img src="{{{cardimage}}}" class="img-fluid mt-3 mb-3" alt="decorative image for the activity">
       </div>
       <div class="col-sm-8 {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
       {{/showcardimages}}
       {{^showcardimages}}
       <div class="col {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
       {{/showcardimages}}
-        <h5 class="card-title mt-3">{{{cmname}}}</h5>
+        {{#tags.tagscount}}<div class="tags mt-3">
+          {{#tags.tags}}
+            <span class="badge badge-secondary">{{name}}</span>
+          {{/tags.tags}}
+        </div>{{/tags.tagscount}}
+
+        <h5 class="card-title mt-2 mb-2{{^showicon}} hide-icon{{/showicon}}">{{{cmname}}}</h5>
+
         {{#text}}
         <div class="text {{^mod.uservisible}} contentwithoutlink dimmed dimmed_text {{/mod.uservisible}}">
             {{{text}}}
         </div>
         {{/text}}
+
         {{#mod.afterlink}}
         <p class="text-muted">
           <small>{{{mod.afterlink}}}</small>
