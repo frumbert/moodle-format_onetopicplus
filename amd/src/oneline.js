@@ -28,7 +28,7 @@ import $ from 'jquery';
  */
  export const load = (icons) => {
 
-    $('.onetopic .tabs-wrapper').each(function() {
+    $('.onetopicplus .tabs-wrapper').each(function() {
 
         var $container = $(this);
         var $menu = $container.find('> ul.nav.nav-tabs');

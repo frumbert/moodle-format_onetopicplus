@@ -58,17 +58,17 @@ $section = $displaysection;
 
 $renderer->numsections = course_get_format($course)->get_last_section_number();
 
-$disableajax = optional_param('onetopic_da', -1, PARAM_INT);
+$disableajax = optional_param('otp_da', -1, PARAM_INT);
 
-if (!isset($USER->onetopic_da)) {
-    $USER->onetopic_da = array();
+if (!isset($USER->otp_da)) {
+    $USER->otp_da = array();
 }
 
 if ($disableajax !== -1) {
     if ($disableajax === 0) {
-        $USER->onetopic_da[$course->id] = false;
+        $USER->otp_da[$course->id] = false;
     } else {
-        $USER->onetopic_da[$course->id] = true;
+        $USER->otp_da[$course->id] = true;
     }
 }
 

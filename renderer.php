@@ -509,7 +509,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             if ($course->realcoursedisplay != COURSE_DISPLAY_MULTIPAGE || $displaysection !== 0) {
 
                 if ($showsubtabs) {
-                    echo html_writer::start_tag('div', array('class' => 'onetopic-subtabs_body'));
+                    echo html_writer::start_tag('div', array('class' => 'onetopicplus-subtabs_body'));
                     echo $this->print_tabs_structure($selectedsubtabs->get_childs(), true);
                 }
 
@@ -596,11 +596,11 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             $url = clone($baseurl);
 
             global $USER;
-            if (isset($USER->onetopic_da[$course->id]) && $USER->onetopic_da[$course->id]) {
-                $url->param('onetopic_da', 0);
+            if (isset($USER->otp_da[$course->id]) && $USER->otp_da[$course->id]) {
+                $url->param('otp_da', 0);
                 $textbuttondisableajax = get_string('enable', 'format_onetopicplus');
             } else {
-                $url->param('onetopic_da', 1);
+                $url->param('otp_da', 1);
                 $textbuttondisableajax = get_string('disable', 'format_onetopicplus');
             }
 

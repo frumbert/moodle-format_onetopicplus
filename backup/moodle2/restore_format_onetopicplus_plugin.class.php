@@ -54,7 +54,7 @@ class restore_format_onetopicplus_plugin extends restore_format_topics_plugin {
 
         $data = $this->connectionpoint->get_data();
         $backupinfo = $this->step->get_task()->get_info();
-        if ($backupinfo->original_course_format !== 'onetopic' || !isset($data['tags']['numsections'])) {
+        if ($backupinfo->original_course_format !== 'onetopicplus' || !isset($data['tags']['numsections'])) {
             // Backup from another course format or backup file does not even have 'numsections'.
             return;
         }

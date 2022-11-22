@@ -60,16 +60,16 @@
     padding-left: 20px;
 }
 
-.format-onetopicplus .onetopic .nav-tabs > li > a {
+.format-onetopicplus .onetopicplus .nav-tabs > li > a {
     padding: 0;
 }
 
-.format-onetopicplus .onetopic .tab_content {
+.format-onetopicplus .onetopicplus .tab_content {
     padding: 8px 12px;
     display: inline-block;
 }
 
-.format-onetopicplus .onetopic_hideicons .activityicon {
+.format-onetopicplus .onetopicplus_hideicons .activityicon {
     display: none;
 }
 
@@ -116,43 +116,43 @@
     margin: 1rem 0;
 }
 
-.format-onetopicplus .onetopic .content > .summary .quickeditlink {
+.format-onetopicplus .onetopicplus .content > .summary .quickeditlink {
     display: none;
 }
 
-.format-onetopicplus .onetopic .content > .summary .iconhelp {
+.format-onetopicplus .onetopicplus .content > .summary .iconhelp {
     cursor: pointer;
     margin-left: 2px;
 }
 
-.format-onetopicplus .onetopic .content > .summary .iconhelp i {
+.format-onetopicplus .onetopicplus .content > .summary .iconhelp i {
     margin: 0;
 }
 
-.format-onetopicplus .onetopic .completiontag > form,
-.format-onetopicplus .onetopic .completiontag > form > div {
+.format-onetopicplus .onetopicplus .completiontag > form,
+.format-onetopicplus .onetopicplus .completiontag > form > div {
     display: inline;
 }
 
-.format-onetopicplus .onetopic .completiontag > form > div button {
+.format-onetopicplus .onetopicplus .completiontag > form > div button {
     padding: 0;
     margin: 0;
     line-height: 0;
 }
 
-.format-onetopicplus .onetopic .completiontag img.icon {
+.format-onetopicplus .onetopicplus .completiontag img.icon {
     margin: 0 3px 0 5px;
 }
 
-.format-onetopicplus .onetopic .completiontag .showcompletionconditions {
+.format-onetopicplus .onetopicplus .completiontag .showcompletionconditions {
     position: absolute;
 }
 
-.format-onetopicplus .onetopic .completiontag.hascompletionconditions {
+.format-onetopicplus .onetopicplus .completiontag.hascompletionconditions {
     padding-right: 24px;
 }
 
-.format-onetopicplus .onetopic .completiontag .showcompletionconditions:hover {
+.format-onetopicplus .onetopicplus .completiontag .showcompletionconditions:hover {
     z-index: 2;
     background-color: #fff;
     padding: 5px;
@@ -160,24 +160,24 @@
     border-radius: 5px;
 }
 
-.format-onetopicplus .onetopic .completiontag .showcompletionconditions .activity-information {
+.format-onetopicplus .onetopicplus .completiontag .showcompletionconditions .activity-information {
     display: none;
 }
 
-.format-onetopicplus .onetopic .completiontag .showcompletionconditions:hover .activity-information {
+.format-onetopicplus .onetopicplus .completiontag .showcompletionconditions:hover .activity-information {
     display: block;
 }
 
-.format-onetopicplus .onetopic .completiontag .showcompletionconditions:hover > img {
+.format-onetopicplus .onetopicplus .completiontag .showcompletionconditions:hover > img {
     display: none;
 }
 
-.format-onetopicplus .onetopic.verticaltabs > a[name="tabs-tree-start"] {
+.format-onetopicplus .onetopicplus.verticaltabs > a[name="tabs-tree-start"] {
     padding-bottom: 20px;
     display: block;
 }
 
-.format-onetopicplus .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
+.format-onetopicplus .onetopicplus.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
     float: left;
     display: flex;
     flex-direction: column;
@@ -186,25 +186,25 @@
     border-bottom: none;
 }
 
-.format-onetopicplus .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) .nav-item {
+.format-onetopicplus .onetopicplus.verticaltabs > .nav.nav-tabs:nth-of-type(1) .nav-item {
     margin-right: -1px;
     margin-bottom: 0;
     max-width: 100%;
 }
 
-.format-onetopicplus .onetopic.verticaltabs > .content-section {
+.format-onetopicplus .onetopicplus.verticaltabs > .content-section {
     margin-left: 260px;
     display: grid;
 }
 
-.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-link:hover,
-.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-link:focus,
-.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-link.active,
-.format-onetopicplus .onetopic.verticaltabs > .nav-tabs .nav-item.show .nav-link {
+.format-onetopicplus .onetopicplus.verticaltabs > .nav-tabs .nav-link:hover,
+.format-onetopicplus .onetopicplus.verticaltabs > .nav-tabs .nav-link:focus,
+.format-onetopicplus .onetopicplus.verticaltabs > .nav-tabs .nav-link.active,
+.format-onetopicplus .onetopicplus.verticaltabs > .nav-tabs .nav-item.show .nav-link {
     border-color: #dee2e6 #fff #dee2e6 #dee2e6;
 }
 
-.format-onetopicplus .onetopic-subtabs_body {
+.format-onetopicplus .onetopicplus-subtabs_body {
     padding: 0 15px;
 }
 
@@ -279,12 +279,12 @@
 }
 
 @media (max-width: 600px) {
-    .format-onetopicplus .onetopic.verticaltabs > .content-section {
+    .format-onetopicplus .onetopicplus.verticaltabs > .content-section {
         clear: both;
         margin-left: inherit;
     }
 
-    .format-onetopicplus .onetopic.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
+    .format-onetopicplus .onetopicplus.verticaltabs > .nav.nav-tabs:nth-of-type(1) {
         width: auto;
         flex-direction: inherit;
     }

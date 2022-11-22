@@ -94,7 +94,7 @@ class format_onetopicplus extends format_base {
         $course = $this->get_course();
 
         if (!self::$loaded && isset($section) && $courseid &&
-                ($PAGE->pagetype == 'course-view-onetopic' || $PAGE->pagetype == 'course-view')) {
+                ($PAGE->pagetype == 'course-view-onetopicplus' || $PAGE->pagetype == 'course-view')) {
             self::$loaded = true;
 
             if ($sectionid <= 0) {
@@ -264,14 +264,14 @@ class format_onetopicplus extends format_base {
     public function supports_ajax() {
         global $COURSE, $USER;
 
-        if (!isset($USER->onetopic_da)) {
-            $USER->onetopic_da = array();
+        if (!isset($USER->otp_da)) {
+            $USER->otp_da = array();
         }
 
         if (empty($COURSE)) {
             $disableajax = false;
         } else {
-            $disableajax = isset($USER->onetopic_da[$COURSE->id]) ? $USER->onetopic_da[$COURSE->id] : false;
+            $disableajax = isset($USER->otp_da[$COURSE->id]) ? $USER->otp_da[$COURSE->id] : false;
         }
 
         $ajaxsupport = new stdClass();
@@ -951,7 +951,7 @@ function format_onetopicplus_inplace_editable($itemtype, $itemid, $newvalue) {
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
         $section = $DB->get_record_sql(
             'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
-            array($itemid, 'onetopic'), MUST_EXIST);
+            array($itemid, 'onetopicplus'), MUST_EXIST);
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }

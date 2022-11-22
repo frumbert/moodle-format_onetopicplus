@@ -61,7 +61,7 @@ $string['showactivityicons_help'] = 'Show the activity type icon (applies to Til
 $string['movesectionto'] = 'Move current topic';
 $string['movesectionto_help'] = 'Move current topic to left/right of selected topic';
 
-$string['utilities'] = 'Tabs edition utilities';
+$string['utilities'] = 'Manage topics';
 $string['disableajax'] = 'Asynchronous edit actions';
 $string['disable'] = 'Disable';
 $string['enable'] = 'Enable';
@@ -112,7 +112,7 @@ $string['templetetopic_list'] = 'Yes, use the summary as template, list the reso
 $string['templatetopic_icons'] = 'Show icon in resource links in summary';
 $string['templatetopic_icons_help'] = 'This option defines if the icons are displayed in the summary when it is a template.';
 $string['hidden_message'] = 'The section <em>{$a}</em> is not currently available.';
-$string['privacy:metadata'] = 'The Onetopic format plugin does not store any personal data.';
+$string['privacy:metadata'] = 'The Onetopicplus format plugin does not store any personal data.';
 $string['hiddensectionshelp'] = 'Hidden sections are shown in collapsed form with available message';
 
 $string['tabsview'] = 'Tabs view';
