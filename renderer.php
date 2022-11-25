@@ -1320,7 +1320,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             $activitydates = \core\activity_dates::get_dates_for_module($mod, $USER->id);
         }
 
-        $template->mod->extraclasses .= " mb-3";
+        $template->mod->set_extra_classes("mb-3");
         $template->cardimage = '';
         $template->tags = '';
         $template->text = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
