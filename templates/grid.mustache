@@ -3,3 +3,30 @@
     {{{output}}}
     </div>
 </div>
+
+{{#js}}
+require(['jquery'], function($) {
+    $(document).ready(function() {
+        $(".star-fn").each(function(index,el) {
+            let moduleid = el.closest('div[data-module]').dataset.module;
+            let courseid = Array.from(document.body.classList).filter(v=>v.indexOf('course-')===0)[0].replace('course-','');
+            $(el).on('click',function(e) { toggleStar(e,courseid,moduleid) });
+        });
+    });
+});
+
+// tile star ajax
+function toggleStar(event,course,module) {
+    const on = '{{#pix}}i/star, core, {{#str}}star, format_onetopicplus{{/str}}{{/pix}}';
+    const off = '{{#pix}}i/star-o, core, {{#str}}unstar, format_onetopicplus{{/str}}{{/pix}}';
+    $.post('/course/format/onetopicplus/ajax.php', {
+        "sesskey": M.cfg.sesskey,
+        "id": course,
+        "context": module,
+        "action": "togglestar"
+    }).done(function(result) {
+        let node = event.target.closest('.star-fn'); // self or parent
+        node.innerHTML = result.state ? on : off;
+    });
+}
+{{/js}}

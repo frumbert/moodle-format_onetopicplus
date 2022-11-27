@@ -420,6 +420,10 @@ class format_onetopicplus extends format_base {
                     'default' => 1,
                     'type' => PARAM_INT
                 ),
+                'stars' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                )
             );
             if (!empty($CFG->usetags)) {
                 $courseformatoptions['showtags'] = array(
@@ -578,6 +582,18 @@ class format_onetopicplus extends format_base {
                 'activityicons' => array(
                     'label' => get_string('showactivityicons', 'format_onetopicplus'),
                     'help' => 'showactivityicons',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    )
+                ),
+                'stars' => array(
+                    'label' => get_string('stars', 'format_onetopicplus'),
+                    'help' => 'stars',
                     'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(
@@ -1038,5 +1054,28 @@ class format_onetopicplus_replace_regularexpression {
             $term = str_replace($this->_string_search, $newreplace, $term);
         }
         return $term;
+    }
+}
+
+// store starred modules as user prefs
+class format_onetopicplus_stars {
+    private $cm;
+    private $state;
+
+    function __construct(cm_info $mod) {
+        $this->cm = $mod;
+        $this->state = null;
+    }
+
+    public function get_state() {
+        if (is_null($this->state)) {
+            $this->state = get_user_preferences('mod-' . $this->cm->id . '-star', 'false');
+        }
+        return ($this->state === 'true');
+    }
+
+    public function set_state($value) {
+        $this->state = (bool)$value ? 'true' : 'false';
+        set_user_preferences(['mod-' . $this->cm->id . '-star' => $this->state]);
     }
 }

@@ -18,7 +18,7 @@
  * Onetopic renderer logic implementation.
  *
  * @package format_onetopicplus
- * @copyright 2012 David Herney Bernal - cirano
+ * @copyright 2022 tim st clair
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 use \format_onetopicplus\singletab;
@@ -31,7 +31,7 @@ require_once($CFG->dirroot.'/course/format/topics/renderer.php');
 /**
  * Basic renderer for onetopic format.
  *
- * @copyright 2012 David Herney Bernal - cirano
+ * @copyright 2022 tim st clair
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_onetopicplus_renderer extends format_topics_renderer { // format_section_renderer_base {
@@ -1328,6 +1328,11 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         $template->cardimage = '';
         $template->tags = '';
         $template->text = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
+
+        $Stars = new format_onetopicplus_stars($mod);
+        $template->stars = new stdClass();
+        $template->stars->enabled = ($course->stars === 1);
+        $template->stars->state = $Stars->get_state() ? 1 : 0;
 
         // Fetch completion details.
         $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;

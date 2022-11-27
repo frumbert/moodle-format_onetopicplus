@@ -21,6 +21,10 @@
     </div>
     {{/showcardimages}}
     <div class="row content flex-fill {{^mod.uservisible}} notavailable bg-gray020 {{/mod.uservisible}}">
+      {{#stars.enabled}}<div class="float-right star-fn">
+      {{#stars.state}}{{#pix}}i/star, core, {{#str}}star, format_onetopicplus{{/str}}{{/pix}}{{/stars.state}}
+      {{^stars.state}}{{#pix}}i/star-o, core, {{#str}}unstar, format_onetopicplus{{/str}}{{/pix}}{{/stars.state}}
+      </div>{{/stars.enabled}}
       {{#tags.tagscount}}<div class="tags mt-3">
         {{#tags.tags}}
           <span class="badge badge-secondary">{{name}}</span>
