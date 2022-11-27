@@ -1370,7 +1370,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         // visibility helpers
         $template->showcardimages = ($course->cardimage !== format_onetopicplus::CARDIMAGE_NONE) && (!empty($template->cardimage));
         $template->showheader = (!$this->is_empty($template->editing));
-        $template->showfooter = (!$this->is_empty($template->completion) || !$this->is_empty($template->availability) || !$this->is_empty($template->duration));
+        $template->showfooter = (!$this->is_empty($template->completion) || !$this->is_empty($template->availability));
 
         // choose rendering template for this tile
         if ($mod->modname === "label") {
