@@ -36,6 +36,9 @@ $string['hidetabsbar_help'] = 'Hide tabs bar in the course page. The navigation 
 $string['hidebottomnav'] = 'Hide bottom navigation bar';
 $string['hidebottomnav_help'] = 'Hide botton navigation bar in the course page.';
 
+$string['tabclasses'] = 'Tab bar extra classnames';
+$string['tabclasses_help'] = 'Additional css classnames to apply to the tab bar container (example: Show on mobile only "d-none d-sm-block d-md-none")';
+
 $string['activitydisplay'] = 'Activity layout';
 $string['activitydisplay_help'] = 'The style of display for listing activities within a section. Cards will display the first image in the description (if shown) as the card header, or from module metadata field called "activityimage" (if required plugins are available).';
 $string['list'] = 'List';

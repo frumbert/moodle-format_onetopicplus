@@ -1097,14 +1097,18 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             }
         }
 
+        $extraclasses = $this->_course->tabclasses;
+
+        if (!empty($extraclasses)) echo html_writer::start_tag('div', array('class' => $extraclasses ));
         if ($this->_course->tabsview == format_onetopicplus::TABSVIEW_ONELINE) {
-            echo html_writer::start_tag('div', array('class' => 'tabs-wrapper'));
+            echo html_writer::start_tag('div', array('class' => 'tabs-wrapper ' ));
             echo $this->output->tabtree($tabstree, $selected, $inactivetabs);
             echo html_writer::end_tag('div');
 
         } else {
             echo $this->output->tabtree($tabstree, $selected, $inactivetabs);
         }
+        if (!empty($extraclasses)) echo html_writer::end_tag('div');
     }
 
     /* ---------------------------------- begin mod ---------------------------------- */

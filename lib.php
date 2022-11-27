@@ -380,6 +380,10 @@ class format_onetopicplus extends format_base {
                     'default' => 0,
                     'type' => PARAM_INT
                 ),
+                'tabclasses' => array(
+                    'default' => '',
+                    'type' => PARAM_TEXT
+                ),
                 'hidebottomnav' => array(
                     'default' => 0,
                     'type' => PARAM_INT
@@ -415,7 +419,7 @@ class format_onetopicplus extends format_base {
                 'activityicons' => array(
                     'default' => 1,
                     'type' => PARAM_INT
-                )
+                ),
             );
             if (!empty($CFG->usetags)) {
                 $courseformatoptions['showtags'] = array(
@@ -470,6 +474,12 @@ class format_onetopicplus extends format_base {
                             1 => new lang_string('yes')
                         )
                     ),
+                ),
+                'tabclasses' => array(
+                    'label' => get_string('tabclasses', 'format_onetopicplus'),
+                    'help' => 'tabclasses',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'text'
                 ),
                 'hidebottomnav' => array(
                     'label' => get_string('hidebottomnav', 'format_onetopicplus'),
