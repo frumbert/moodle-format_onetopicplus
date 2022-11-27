@@ -17,8 +17,8 @@ require(['jquery'], function($) {
 
 // tile star ajax
 function toggleStar(event,course,module) {
-    const on = '{{#pix}}i/star, core, {{#str}}star, format_onetopicplus{{/str}}{{/pix}}';
-    const off = '{{#pix}}i/star-o, core, {{#str}}unstar, format_onetopicplus{{/str}}{{/pix}}';
+    const on = '{{#pix}}i/star, core, {{#str}}unstar, format_onetopicplus{{/str}}{{/pix}}';
+    const off = '{{#pix}}i/star-o, core, {{#str}}star, format_onetopicplus{{/str}}{{/pix}}';
     $.post('/course/format/onetopicplus/ajax.php', {
         "sesskey": M.cfg.sesskey,
         "id": course,
