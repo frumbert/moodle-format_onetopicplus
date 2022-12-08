@@ -244,9 +244,11 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             }
         }
 
-        // Start single-section div.
         $cssclass = 'single-section onetopicplus';
         $cssclass .= $this->_course->tabsview == format_onetopicplus::TABSVIEW_VERTICAL ? ' verticaltabs' : '';
+        if ($this->_course->toggler) $cssclass .= " has-toggler";
+
+        // Start single-section div.
         echo html_writer::start_tag('div', array('class' => $cssclass));
 
         // Move controls.
@@ -498,8 +500,21 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
 
         if ($this->page->user_is_editing() || (!$course->hidetabsbar && $tabs->has_tabs())) {
+            if ($this->_course->toggler) {
+        // start toggler
+                $toggle_class = "btn btn-secondary {$this->_course->tabclasses}";
+                $toggle_id = html_writer::random_id();
+                $toggle_icon = html_writer::tag('span', '', ['class'=>'fa fa-bars']);
+                $toggle_button = html_writer::tag('button', $toggle_icon, ['class'=>$toggle_class, 'type'=>'button', 'data-toggle'=>'collapse', 'data-target'=>"#{$toggle_id}", 'aria-controls'=>"{$toggle_id}", 'aria-expanded'=>'false', 'aria-label'=>'Toggle navigation']);
+                echo html_writer::div($toggle_button,'toggle-button');
+                echo html_writer::start_tag('nav', ['class'=>'collapse', 'id' => $toggle_id]);
+                $this->print_tabs_structure($tabs);
+                echo html_writer::end_tag('nav');
+            } else {
             $this->print_tabs_structure($tabs);
+            }
         }
+
 
         // Start content div.
         echo html_writer::start_tag('div', array('class' => 'content-section'));
@@ -564,10 +579,10 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
 
         // Close content-section div.
-        echo html_writer::end_tag('div');
+        echo html_writer::end_div();
 
         // Close single-section div.
-        echo html_writer::end_tag('div');
+        echo html_writer::end_div();
 
         if ($this->page->user_is_editing() && has_capability('moodle/course:update', $context)) {
 

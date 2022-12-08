@@ -384,6 +384,10 @@ class format_onetopicplus extends format_base {
                     'default' => '',
                     'type' => PARAM_TEXT
                 ),
+                'toggler' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                ),
                 'hidebottomnav' => array(
                     'default' => 0,
                     'type' => PARAM_INT
@@ -594,6 +598,18 @@ class format_onetopicplus extends format_base {
                 'stars' => array(
                     'label' => get_string('stars', 'format_onetopicplus'),
                     'help' => 'stars',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    )
+                ),
+                'toggler' => array(
+                    'label' => get_string('toggler', 'format_onetopicplus'),
+                    'help' => 'toggler',
                     'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(

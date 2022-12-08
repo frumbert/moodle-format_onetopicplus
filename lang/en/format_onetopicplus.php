@@ -37,7 +37,10 @@ $string['hidebottomnav'] = 'Hide bottom navigation bar';
 $string['hidebottomnav_help'] = 'Hide botton navigation bar in the course page.';
 
 $string['tabclasses'] = 'Tab bar extra classnames';
-$string['tabclasses_help'] = 'Additional css classnames to apply to the tab bar container (example: Show on mobile only "d-none d-sm-block d-md-none")';
+$string['tabclasses_help'] = 'Additional css classnames to apply to the tab bar container (example: Show on mobile only "d-block d-md-none")';
+
+$string['toggler'] = 'Tab bar menu toggle button';
+$string['toggler_help'] = 'Add a tab-bar toggle button to hide/show the tab bar (useful in conjunction with tab classnames for mobile devices). Tabs will be hidden by default and toggler button will include the same classnames as Tab Classes setting.';
 
 $string['stars'] = 'Starrable';
 $string['stars_help'] = '(For Tiles only) Ability to star/favorite an activity';
