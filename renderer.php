@@ -502,7 +502,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         if ($this->page->user_is_editing() || (!$course->hidetabsbar && $tabs->has_tabs())) {
             if ($this->_course->toggler) {
         // start toggler
-                $toggle_class = "btn btn-secondary {$this->_course->tabclasses}";
+                $toggle_class = "btn btn-light {$this->_course->tabclasses}";
                 $toggle_id = html_writer::random_id();
                 $toggle_icon = html_writer::tag('span', '', ['class'=>'fa fa-bars']);
                 $toggle_button = html_writer::tag('button', $toggle_icon, ['class'=>$toggle_class, 'type'=>'button', 'data-toggle'=>'collapse', 'data-target'=>"#{$toggle_id}", 'aria-controls'=>"{$toggle_id}", 'aria-expanded'=>'false', 'aria-label'=>'Toggle navigation']);
