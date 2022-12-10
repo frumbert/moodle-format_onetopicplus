@@ -1288,6 +1288,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
      *
      * This function calls:
      * {@link self::course_section_cm()}
+     * {@link self::cm_filter()}
      *
      * @param stdClass $course
      * @param completion_info $completioninfo
@@ -1304,11 +1305,19 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         return $output;
     }
 
-    // filter the html output text for this module tile
-    private static function cm_filter($course, $mod, $html) {
+    // 
+    /**
+     * Rfilter the html output text for this module tile, replacing customfields with formats defined in course format options
+     *
+     * @param stdClass $course
+     * @param cm_info $mod
+     * @param string $modulehtml
+     * @return String
+     */
+   private static function cm_filter($course, $mod, $html) {
 
         // might as well clean up this garbage while we're here
-        $emptytags = ['<p dir="ltr" style="text-align: left;"><br></p>','<p dir="ltr" style="text-align: left;"></p>','<p></p>'];
+        $emptytags = ['<p dir="ltr" style="text-align: left;"><br></p>','<p dir="ltr" style="text-align: left;"></p>','<p></p>','<p><br></p>'];
         $html =  str_replace($emptytags, '', $html);
 
         if (!class_exists('local_modcustomfields\customfield\mod_handler')) return $html;
