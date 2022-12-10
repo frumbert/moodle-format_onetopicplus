@@ -427,6 +427,10 @@ class format_onetopicplus extends format_base {
                 'stars' => array(
                     'default' => 0,
                     'type' => PARAM_INT
+                ),
+                'replacers' => array(
+                    'default' > '',
+                    'type' => PARAM_RAW
                 )
             );
             if (!empty($CFG->usetags)) {
@@ -618,7 +622,17 @@ class format_onetopicplus extends format_base {
                             1 => new lang_string('yes')
                         )
                     )
-                )
+                ),
+                'replacers' => array(
+                    'label' => get_string('replacers', 'format_onetopicplus'),
+                    'help' => 'replacers',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'textarea',
+                    'element_attributes' => array([
+                        'rows' => 4,
+                        'cols' => 80
+                    ])
+                ),
             );
             if (!empty($CFG->usetags)) {
                 $courseformatoptionsedit['showtags'] = array(

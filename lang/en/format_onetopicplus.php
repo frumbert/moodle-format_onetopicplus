@@ -42,6 +42,12 @@ $string['tabclasses_help'] = 'Additional css classnames to apply to the tab bar 
 $string['toggler'] = 'Tab bar menu toggle button';
 $string['toggler_help'] = 'Add a tab-bar toggle button to hide/show the tab bar (useful in conjunction with tab classnames for mobile devices). Tabs will be hidden by default and toggler button will include the same classnames as Tab Classes setting.';
 
+$string['replacers'] = 'Customfield Replacement';
+$string['replacers_help'] = "Replaces customfield value XX with YY. One entry per line, format XX|YY or XX|&lt;tag&gt;YY&lt;/tag&gt;\n
+Example: %%name%%|&lt;b&gt;FIELD.VALUE&lt;/b&gt;\n
+If module customfield shortname %%name%% exists and has a value replace FIELD.VALUE in &lt;b&gt;FIELD.VALUE&lt;/b&gt; with the customfield value.\n
+If the customfield value is null/empty, REMOVE %%name%% altogether.";
+
 $string['stars'] = 'Starrable';
 $string['stars_help'] = '(For Tiles only) Ability to star/favorite an activity';
 

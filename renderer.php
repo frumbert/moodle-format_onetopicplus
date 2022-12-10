@@ -73,6 +73,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         $page->set_other_editing_capability('moodle/course:setcurrentsection');
 
         $this->hascustomfieldsmod = (file_exists($CFG->dirroot . '/local/modcustomfields'));
+                                    // or class_exists('local_modcustomfields\customfield\mod_handler') assuming autoloader works
     }
 
     /**
@@ -507,11 +508,11 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
                 $toggle_icon = html_writer::tag('span', '', ['class'=>'fa fa-bars']);
                 $toggle_button = html_writer::tag('button', $toggle_icon, ['class'=>$toggle_class, 'type'=>'button', 'data-toggle'=>'collapse', 'data-target'=>"#{$toggle_id}", 'aria-controls'=>"{$toggle_id}", 'aria-expanded'=>'false', 'aria-label'=>'Toggle navigation']);
                 echo html_writer::div($toggle_button,'toggle-button');
-                echo html_writer::start_tag('nav', ['class'=>'collapse', 'id' => $toggle_id]);
+                echo html_writer::start_tag('nav', ['class'=>'collapse', 'id' => $toggle_id, 'role' => 'menu', 'aria-label' => 'Navigation menu']);
                 $this->print_tabs_structure($tabs);
                 echo html_writer::end_tag('nav');
             } else {
-            $this->print_tabs_structure($tabs);
+                $this->print_tabs_structure($tabs);
             }
         }
 
@@ -1160,7 +1161,6 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         }
         // check for a module images
         $displayoptions['cardimages'] = [];
-        $handler = local_modcustomfields\customfield\mod_handler::create();
  
         // Get the list of modules visible to user (excluding the module being moved if there is one)
         $moduleshtml = array();
@@ -1183,6 +1183,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
 
                     case format_onetopicplus::CARDIMAGE_META:
                         if ($this->hascustomfieldsmod) {
+                            $handler = local_modcustomfields\customfield\mod_handler::create();
                             $datas = $handler->get_instance_data($mod->id);
                             foreach ($datas as $data) {
                                 if (empty($data->get_value())) {
@@ -1298,9 +1299,36 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
     public function course_section_cm_list_item($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
         $output = '';
         if ($modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
-            $output = $modulehtml;
+            $output = self::cm_filter($course, $mod, $modulehtml);
         }
         return $output;
+    }
+
+    // filter the html output text for this module tile
+    private static function cm_filter($course, $mod, $html) {
+
+        // might as well clean up this garbage while we're here
+        $emptytags = ['<p dir="ltr" style="text-align: left;"><br></p>','<p dir="ltr" style="text-align: left;"></p>','<p></p>'];
+        $html =  str_replace($emptytags, '', $html);
+
+        if (!class_exists('local_modcustomfields\customfield\mod_handler')) return $html;
+
+        $handler = local_modcustomfields\customfield\mod_handler::create();
+        $customfielddata = $handler->export_instance_data_object($mod->id); //handy!
+
+        $replacers = [];
+        array_map(function ($v) use (&$replacers) {
+            list($key,$value) = explode('|', $v, 2);
+            $replacers[$key] = $value;
+        }, preg_split('/\r\n|\r|\n/', $course->replacers));
+        foreach ($replacers as $find => $replace) {
+            $fieldname = preg_replace('/%{2}([^%]+)%{2}/','$1', $find); // %%name%% becomes name
+            $replacement_value = isset($customfielddata->$fieldname) ? $customfielddata->$fieldname : ''; // value of $customfieldname->name
+            $replace_out = strlen($replacement_value) > 0 ? str_replace('FIELD.VALUE', $replacement_value, $replace) : ''; // <b>FIELD.VALUE</b> becomes <b>bob</b> or empty;
+            $html = str_replace($find, $replace_out, $html); // final output
+        }
+
+        return $html;
     }
 
     /**
