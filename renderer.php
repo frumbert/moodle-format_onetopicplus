@@ -504,11 +504,12 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             if ($this->_course->toggler) {
         // start toggler
                 $toggle_class = "btn btn-light {$this->_course->tabclasses}";
+                $navstate = $this->_course->toggleropenhome == 1 && $displaysection == 0 ? 'show' : '';
                 $toggle_id = html_writer::random_id();
-                $toggle_icon = html_writer::tag('span', '', ['class'=>'fa fa-bars']);
+                $toggle_icon = html_writer::tag('span', $this->_course->togglerlabel, ['class'=>'fa fa-bars']);
                 $toggle_button = html_writer::tag('button', $toggle_icon, ['class'=>$toggle_class, 'type'=>'button', 'data-toggle'=>'collapse', 'data-target'=>"#{$toggle_id}", 'aria-controls'=>"{$toggle_id}", 'aria-expanded'=>'false', 'aria-label'=>'Toggle navigation']);
                 echo html_writer::div($toggle_button,'toggle-button');
-                echo html_writer::start_tag('nav', ['class'=>'collapse', 'id' => $toggle_id, 'role' => 'menu', 'aria-label' => 'Navigation menu']);
+                echo html_writer::start_tag('nav', ['class'=>'collapse ' . $navstate, 'id' => $toggle_id, 'role' => 'menu', 'aria-label' => 'Navigation menu']);
                 $this->print_tabs_structure($tabs);
                 echo html_writer::end_tag('nav');
             } else {
@@ -1316,10 +1317,11 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
      */
    private static function cm_filter($course, $mod, $html) {
 
-        // might as well clean up this garbage while we're here
+        // might as well clean up this ATTO editor garbage while we're here
         $emptytags = ['<p dir="ltr" style="text-align: left;"><br></p>','<p dir="ltr" style="text-align: left;"></p>','<p></p>','<p><br></p>'];
         $html =  str_replace($emptytags, '', $html);
 
+        // continue only if modules have a customfield handler
         if (!class_exists('local_modcustomfields\customfield\mod_handler')) return $html;
 
         $handler = local_modcustomfields\customfield\mod_handler::create();

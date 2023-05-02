@@ -388,6 +388,14 @@ class format_onetopicplus extends format_base {
                     'default' => 0,
                     'type' => PARAM_INT
                 ),
+                'toggleropenhome' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                ),
+                'togglerlabel' => array(
+                    'default' => '',
+                    'type' => PARAM_TEXT
+                ),
                 'hidebottomnav' => array(
                     'default' => 0,
                     'type' => PARAM_INT
@@ -490,6 +498,12 @@ class format_onetopicplus extends format_base {
                 'tabclasses' => array(
                     'label' => get_string('tabclasses', 'format_onetopicplus'),
                     'help' => 'tabclasses',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'text'
+                ),
+                'togglerlabel' => array(
+                    'label' => get_string('togglerlabel', 'format_onetopicplus'),
+                    'help' => 'togglerlabel',
                     'help_component' => 'format_onetopicplus',
                     'element_type' => 'text'
                 ),
@@ -614,6 +628,17 @@ class format_onetopicplus extends format_base {
                 'toggler' => array(
                     'label' => get_string('toggler', 'format_onetopicplus'),
                     'help' => 'toggler',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    )
+                ),
+                'toggleropenhome' => array(
+                    'label' => get_string('toggler_openhome', 'format_onetopicplus'),
                     'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(

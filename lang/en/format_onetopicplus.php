@@ -41,6 +41,10 @@ $string['tabclasses_help'] = 'Additional css classnames to apply to the tab bar 
 
 $string['toggler'] = 'Tab bar menu toggle button';
 $string['toggler_help'] = 'Add a tab-bar toggle button to hide/show the tab bar (useful in conjunction with tab classnames for mobile devices). Tabs will be hidden by default and toggler button will include the same classnames as Tab Classes setting.';
+$string['toggler_openhome'] = 'Tab bar open on course home?';
+$string['togglerlabel'] = 'Toggle menu label';
+$string['togglerlabel_help'] = 'Label to apply on tab bar menu toggler button (default empty)';
+
 
 $string['replacers'] = 'Customfield Replacement';
 $string['replacers_help'] = "Replaces customfield value XX with YY. One entry per line, format XX|YY or XX|&lt;tag&gt;YY&lt;/tag&gt;\n
