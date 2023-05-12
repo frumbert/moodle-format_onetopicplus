@@ -396,6 +396,14 @@ class format_onetopicplus extends format_base {
                     'default' => '',
                     'type' => PARAM_TEXT
                 ),
+                'staticmenu' => array(
+                    'default' => 0,
+                    'type' => PARAM_TEXT
+                ),
+                'zeros_in_menu' => array(
+                    'default' => 0,
+                    'type' => PARAM_INT
+                ),
                 'hidebottomnav' => array(
                     'default' => 0,
                     'type' => PARAM_INT
@@ -486,6 +494,24 @@ class format_onetopicplus extends format_base {
                 'hidetabsbar' => array(
                     'label' => get_string('hidetabsbar', 'format_onetopicplus'),
                     'help' => 'hidetabsbar',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            0 => new lang_string('no'),
+                            1 => new lang_string('yes')
+                        )
+                    ),
+                ),
+                'staticmenu' => array(
+                    'label' => get_string('staticmenu', 'format_onetopicplus'),
+                    'help' => 'staticmenu',
+                    'help_component' => 'format_onetopicplus',
+                    'element_type' => 'text',
+                ),
+                'zeros_in_menu' => array(
+                    'label' => get_string('zeros_in_menu', 'format_onetopicplus'),
+                    'help' => 'zeros_in_menu',
                     'help_component' => 'format_onetopicplus',
                     'element_type' => 'select',
                     'element_attributes' => array(
@@ -1042,6 +1068,36 @@ function format_onetopicplus_output_course_summary(format_onetopicplus_renderer 
     $template->classname = 'onetopicplus-coursesummary';
     $template->output = format_text($course->summary, $course->summaryformat);
     return $instance->render_from_template("format_onetopicplus/summary", $template);
+}
+
+/**
+ * Get a list of activities in the zeroth section
+ *
+ * @param course $course
+ * @param page $page
+ * @return array
+ */
+
+function format_onetopicplus_get_zeros($course, $page) {
+    $result = [];
+    $modinfo = get_fast_modinfo($course);
+    if (!empty($modinfo->sections[0])) {
+        foreach ($modinfo->sections[0] as $modnumber) {
+            $mod = $modinfo->cms[$modnumber];
+            if (!$mod->uservisible) { // || !$mod->is_visible_on_course_page()) {
+                continue;
+            }
+            if ($mod->modname === "label" || is_null($mod->url)) { // no url to go to, can't list it
+                continue;
+            }
+            $result[] = [
+                "name" => $mod->get_formatted_name(),
+                "url" => $mod->url,
+            ];
+        }
+    }
+
+    return $result;
 }
 
 /**

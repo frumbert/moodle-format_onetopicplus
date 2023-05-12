@@ -45,6 +45,11 @@ $string['toggler_openhome'] = 'Tab bar open on course home?';
 $string['togglerlabel'] = 'Toggle menu label';
 $string['togglerlabel_help'] = 'Label to apply on tab bar menu toggler button (default empty)';
 
+$string['staticmenu'] = 'Toggle menu extra classnames';
+$string['staticmenu_help'] = 'Extra classnames to add to toggle menu container.';
+
+$string['zeros_in_menu'] = 'Include activities from Section 0';
+$string['zeros_in_menu_help'] = 'When rendering the tab menu, you can include the links to activites in section 0 as tabs (best for toggled menus).';
 
 $string['replacers'] = 'Customfield Replacement';
 $string['replacers_help'] = "Replaces customfield value XX with YY. One entry per line, format XX|YY or XX|&lt;tag&gt;YY&lt;/tag&gt;\n

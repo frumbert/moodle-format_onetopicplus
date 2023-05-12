@@ -181,6 +181,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
      * @param int $displaysection The section number in the course which is being displayed
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
+        global $CFG;
 
         $realcoursedisplay = $course->realcoursedisplay;
         $modinfo = get_fast_modinfo($course);
@@ -503,14 +504,22 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
         if ($this->page->user_is_editing() || (!$course->hidetabsbar && $tabs->has_tabs())) {
             if ($this->_course->toggler) {
         // start toggler
-                $toggle_class = "btn btn-light {$this->_course->tabclasses}";
+                $toggle_class = "btn btn-light btn-toggler {$this->_course->tabclasses}";
+                $toggle_container_class = 'toggle-button ' . $this->_course->staticmenu;
+                $extra_links = [];
+                if ($this->_course->zeros_in_menu == 1) {
+                    $zeros = format_onetopicplus_get_zeros($this->_course, $this->page);
+                    foreach ($zeros as $xtra) {
+                        $extra_links[] = $xtra;
+                    }
+                }
                 $navstate = $this->_course->toggleropenhome == 1 && $displaysection == 0 ? 'show' : '';
                 $toggle_id = html_writer::random_id();
-                $toggle_icon = html_writer::tag('span', $this->_course->togglerlabel, ['class'=>'fa fa-bars']);
+                $toggle_icon = html_writer::tag('span', html_writer::tag('span', $this->_course->togglerlabel,['class'=>'toggler-label']), ['class'=>'fa fa-bars']);
                 $toggle_button = html_writer::tag('button', $toggle_icon, ['class'=>$toggle_class, 'type'=>'button', 'data-toggle'=>'collapse', 'data-target'=>"#{$toggle_id}", 'aria-controls'=>"{$toggle_id}", 'aria-expanded'=>'false', 'aria-label'=>'Toggle navigation']);
-                echo html_writer::div($toggle_button,'toggle-button');
+                echo html_writer::div($toggle_button, $toggle_container_class);
                 echo html_writer::start_tag('nav', ['class'=>'collapse ' . $navstate, 'id' => $toggle_id, 'role' => 'menu', 'aria-label' => 'Navigation menu']);
-                $this->print_tabs_structure($tabs);
+                $this->print_tabs_structure($tabs, false, $extra_links);
                 echo html_writer::end_tag('nav');
             } else {
                 $this->print_tabs_structure($tabs);
@@ -1086,7 +1095,7 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
      * @param \format_onetopicplus\tabs $tabs Object with tabs list.
      * @param boolean $assubtabs True: if current tabs are a second level tabs.
      */
-    private function print_tabs_structure(\format_onetopicplus\tabs $tabs, $assubtabs = false) {
+    private function print_tabs_structure(\format_onetopicplus\tabs $tabs, $assubtabs = false, $extra_links = []) {
 
         $list = $tabs->get_list();
         $tabstree = array();
@@ -1112,6 +1121,16 @@ class format_onetopicplus_renderer extends format_topics_renderer { // format_se
             if (!$tab->active) {
                 $inactivetabs[] = "tab_topic_" . $tab->index;
             }
+        }
+
+        // render any extra links
+        foreach ($extra_links as $index => $xtra) {
+            $tabstree[] = new tabobject(
+                "tab_zero_{$index}",
+                $xtra['url'],
+                '<innertab class="tab_content tab_xtra"><span class="sectionname">' . $xtra['name'] . "</span></innertab>",
+                $xtra['name']
+            );
         }
 
         $extraclasses = $this->_course->tabclasses;
